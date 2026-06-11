@@ -9,6 +9,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<style>
+  /* hero with portrait */
+  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center}
+  .hero-photo{position:relative;max-width:360px;justify-self:end}
+  .hero-photo img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
+  .hero-photo::after{
+    content:"";position:absolute;right:-10px;bottom:-10px;width:56px;height:56px;
+    background:var(--accent);z-index:-1;border-radius:4px;
+  }
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;gap:32px}
+    .hero-photo{justify-self:start;max-width:300px}
+  }
+</style>
 </head>
 <body>
 
@@ -29,13 +43,20 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <p class="eyebrow">Athens, GR · Innovation · Last-mile logistics</p>
-    <h1>Panagiotis Kanellopoulos</h1>
-    <p class="role">Head of Innovation at ACS Courier &amp; Postal Services, and ACS ambassador to iQnovus, the Quest Group innovation centre. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
-    <p class="sub">My route here went through more than a decade in medical-sector sales and product management, then ACS corporate sales. So I look at every pilot from two sides at once: does it work operationally, and does it create value for the customer and the business. Outside the day job: agentic AI, Python, blockchain, Web3 and IoT.</p>
-    <div class="hero-actions">
-      <a class="btn btn-accent" href="contact.html">Get in touch</a>
-      <a class="btn" href="workspace/index.html">Private workspace</a>
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Athens, GR · Innovation · Last-mile logistics</p>
+        <h1>Panagiotis Kanellopoulos</h1>
+        <p class="role">Head of Innovation at ACS Courier &amp; Postal Services, and ACS ambassador to iQnovus, the Quest Group innovation centre. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
+        <p class="sub">My route here went through more than a decade in medical-sector sales and product management, then ACS corporate sales. So I look at every pilot from two sides at once: does it work operationally, and does it create value for the customer and the business. Outside the day job: agentic AI, Python, blockchain, Web3 and IoT.</p>
+        <div class="hero-actions">
+          <a class="btn btn-accent" href="contact.html">Get in touch</a>
+          <a class="btn" href="workspace/index.html">Private workspace</a>
+        </div>
+      </div>
+      <figure class="hero-photo">
+        <img src="assets/profile.jpg" alt="Panagiotis Kanellopoulos" width="800" height="1000" fetchpriority="high">
+      </figure>
     </div>
   </section>
 

@@ -9,20 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
-<style>
-  /* hero with portrait */
-  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center}
-  .hero-photo{position:relative;max-width:360px;justify-self:end}
-  .hero-photo img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
-  .hero-photo::after{
-    content:"";position:absolute;right:-10px;bottom:-10px;width:56px;height:56px;
-    background:var(--accent);z-index:-1;border-radius:4px;
-  }
-  @media (max-width:760px){
-    .hero-grid{grid-template-columns:1fr;gap:32px}
-    .hero-photo{justify-self:start;max-width:300px}
-  }
-</style>
+<script src="assets/site.js" defer></script>
 </head>
 <body>
 
@@ -39,22 +26,23 @@
   </div>
 </header>
 
-<main class="wrap">
+<main class="wrap route">
+  <span class="route-progress" aria-hidden="true"></span>
 
   <!-- ============ HERO ============ -->
   <section class="hero">
     <div class="hero-grid">
       <div>
-        <p class="eyebrow">Athens, GR · Innovation · Last-mile logistics</p>
-        <h1>Panagiotis Kanellopoulos</h1>
-        <p class="role">Head of Innovation at ACS Courier &amp; Postal Services, and ACS ambassador to iQnovus, the Quest Group innovation centre. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
-        <p class="sub">My route here went through more than a decade in medical-sector sales and product management, then ACS corporate sales. So I look at every pilot from two sides at once: does it work operationally, and does it create value for the customer and the business. Outside the day job: agentic AI, Python, blockchain, Web3 and IoT.</p>
-        <div class="hero-actions">
+        <p class="eyebrow fade-up d1">Athens, GR · Innovation · Last-mile logistics</p>
+        <h1 class="fade-up d2">Panagiotis Kanellopoulos</h1>
+        <p class="role fade-up d3">Head of Innovation at ACS Courier &amp; Postal Services, and ACS ambassador to iQnovus, the Quest Group innovation centre. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
+        <p class="sub fade-up d4">My route here went through more than a decade in medical-sector sales and product management, then ACS corporate sales. So I look at every pilot from two sides at once: does it work operationally, and does it create value for the customer and the business. Outside the day job: agentic AI, Python, blockchain, Web3 and IoT.</p>
+        <div class="hero-actions fade-up d5">
           <a class="btn btn-accent" href="contact.html">Get in touch</a>
           <a class="btn" href="workspace/index.html">Private workspace</a>
         </div>
       </div>
-      <figure class="hero-photo">
+      <figure class="hero-photo fade-up d3">
         <img src="assets/profile.jpg" alt="Panagiotis Kanellopoulos" width="800" height="1000" fetchpriority="high">
       </figure>
     </div>
@@ -62,27 +50,27 @@
 
   <!-- ============ FOCUS ============ -->
   <section class="section" id="focus">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Focus areas</p>
       <h2>What I work on</h2>
     </div>
     <div class="grid grid-2">
-      <article class="card">
+      <article class="card reveal">
         <span class="code">OOH</span>
         <h3>Out-of-home delivery &amp; locker networks</h3>
         <p>Strategy and operations for locker-based delivery: network design, customer adoption, and routing parcels to where people actually want them.</p>
       </article>
-      <article class="card">
+      <article class="card reveal">
         <span class="code">URBAN</span>
         <h3>Urban logistics pilots</h3>
         <p>Piloting new delivery models in dense city environments — micro-hubs, consolidated flows, low-emission last mile — with Athens as the main testbed.</p>
       </article>
-      <article class="card">
+      <article class="card reveal">
         <span class="code">EU R&amp;D</span>
         <h3>EU-funded research &amp; innovation</h3>
         <p>Horizon Europe and national projects: shaping proposals, coordinating pilots and partners, and delivering on time and in budget — with claims a courier operator can credibly stand behind.</p>
       </article>
-      <article class="card">
+      <article class="card reveal">
         <span class="code">ADOPT</span>
         <h3>From pilot to operations</h3>
         <p>The hard part of innovation: moving ideas out of the demo phase and into daily operations, working with startups, universities, research centres, technology providers and public authorities.</p>
@@ -92,14 +80,14 @@
 
   <!-- ============ PROJECTS ============ -->
   <section class="section" id="projects">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Project portfolio</p>
       <h2>EU &amp; national projects</h2>
     </div>
-    <div style="display:flex;flex-direction:column;gap:20px">
+    <div class="chip-rows reveal">
       <div>
-        <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Horizon Europe</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <p class="chip-label">Horizon Europe</p>
+        <div class="chip-group">
           <span class="chip">PANACEA</span>
           <span class="chip">URBANE</span>
           <span class="chip">DISCO</span>
@@ -108,44 +96,44 @@
         </div>
       </div>
       <div>
-        <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Greek &amp; EU co-funded</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <p class="chip-label">Greek &amp; EU co-funded</p>
+        <div class="chip-group">
           <span class="chip">TRANSFARENCY</span>
           <span class="chip">INCOMPOSE · M&amp;L Cluster</span>
         </div>
       </div>
-      <p class="muted" style="max-width:62ch;font-size:.95rem">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>
+      <p class="note">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>
     </div>
   </section>
 
   <!-- ============ BACKGROUND ============ -->
   <section class="section" id="background">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Background</p>
       <h2>The route so far</h2>
     </div>
     <ol class="timeline">
-      <li>
+      <li class="reveal">
         <span class="when">2002 – 2005</span>
         <h3>Physical education &amp; fitness</h3>
         <p>PE teacher in primary schools (Rhodes, Athens) and fitness instructor/manager — where the sports science foundation comes from.</p>
       </li>
-      <li>
+      <li class="reveal">
         <span class="when">2005 – 2016 · Medical devices sector</span>
         <h3>Sales &amp; product management</h3>
         <p>Over a decade across medical device companies (Vamvas Medicals, 4MED, Oxymed, MEDIWAY and others): product management, sales, training teams and supporting surgeons — mainly surgical and laparoscopic products.</p>
       </li>
-      <li>
+      <li class="reveal">
         <span class="when">2016 – 2023 · ACS</span>
         <h3>Corporate Sales</h3>
         <p>Public and private tenders, new business, and ACS special projects: biological substances, blood samples and pharma deliveries (ACS Medi Express).</p>
       </li>
-      <li>
+      <li class="reveal">
         <span class="when">2021 – 2023 · ACS</span>
         <h3>Innovation Lead</h3>
         <p>Opening up the company's innovation process in close collaboration with iQnovus, the Quest Group innovation centre — building the mechanisms and culture for new technologies, alongside first Horizon EU participations.</p>
       </li>
-      <li>
+      <li class="reveal">
         <span class="when">2023 – present · ACS</span>
         <h3>Innovation Management — Head of Innovation</h3>
         <p>Funding opportunity exploration, pilot design, proposal coordination and management of granted projects — partners, consortium meetings, deliverables, on time and in budget. Plus ecosystem building with startups, academia, research centres and public authorities.</p>
@@ -155,19 +143,19 @@
 
   <!-- ============ CREDENTIALS ============ -->
   <section class="section" id="credentials">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Credentials</p>
       <h2>Education &amp; certifications</h2>
     </div>
     <ul class="cred-list">
-      <li><span class="what">MSc, Health &amp; Physical Education</span><span class="who">Democritus University of Thrace · 2018–2021</span></li>
-      <li><span class="what">BSc, Physical Education Teaching &amp; Coaching</span><span class="who">University of Athens · 1996–2000</span></li>
-      <li><span class="what">In-house Mini MBA, Business Administration</span><span class="who">ALBA Graduate Business School · 2019</span></li>
-      <li><span class="what">CS50: Introduction to Computer Science</span><span class="who">HarvardX</span></li>
-      <li><span class="what">CS50: Introduction to Programming with Python</span><span class="who">HarvardX</span></li>
-      <li><span class="what">CS50: Introduction to AI with Python</span><span class="who">HarvardX</span></li>
-      <li><span class="what">Blockchain (MOOC)</span><span class="who">University of Nicosia · 2024</span></li>
-      <li><span class="what">Languages</span><span class="who">Greek (native) · English (full professional) · Spanish (elementary)</span></li>
+      <li class="reveal"><span class="what">MSc, Health &amp; Physical Education</span><span class="who">Democritus University of Thrace · 2018–2021</span></li>
+      <li class="reveal"><span class="what">BSc, Physical Education Teaching &amp; Coaching</span><span class="who">University of Athens · 1996–2000</span></li>
+      <li class="reveal"><span class="what">In-house Mini MBA, Business Administration</span><span class="who">ALBA Graduate Business School · 2019</span></li>
+      <li class="reveal"><span class="what">CS50: Introduction to Computer Science</span><span class="who">HarvardX</span></li>
+      <li class="reveal"><span class="what">CS50: Introduction to Programming with Python</span><span class="who">HarvardX</span></li>
+      <li class="reveal"><span class="what">CS50: Introduction to AI with Python</span><span class="who">HarvardX</span></li>
+      <li class="reveal"><span class="what">Blockchain (MOOC)</span><span class="who">University of Nicosia · 2024</span></li>
+      <li class="reveal"><span class="what">Languages</span><span class="who">Greek (native) · English (full professional) · Spanish (elementary)</span></li>
     </ul>
   </section>
 

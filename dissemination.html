@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<script src="assets/site.js" defer></script>
 </head>
 <body>
 
@@ -24,23 +25,24 @@
   </div>
 </header>
 
-<main class="wrap">
+<main class="wrap route">
+  <span class="route-progress" aria-hidden="true"></span>
 
-  <section class="hero" style="padding-block:72px 48px">
-    <p class="eyebrow">Public presence</p>
-    <h1 style="font-size:clamp(2rem,4.5vw,3.2rem)">Dissemination</h1>
-    <p class="sub">Talks, articles and coverage — where the work meets the industry. Scientific publications live on their own <a href="publications.html" style="color:var(--accent)">page</a>.</p>
+  <section class="hero hero-sub">
+    <p class="eyebrow fade-up d1">Public presence</p>
+    <h1 class="fade-up d2">Dissemination</h1>
+    <p class="sub fade-up d3">Talks, articles and coverage — where the work meets the industry. Scientific publications live on their own <a href="publications.html">page</a>.</p>
   </section>
 
   <!-- ============ 1. TALKS & PANELS ============ -->
   <section class="section dissem" id="talks">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Section 01</p>
       <h2>Talks &amp; panels</h2>
     </div>
     <div class="grid grid-2">
 
-      <article class="card">
+      <article class="card reveal">
         <div class="top">
           <span class="code">PANEL</span>
           <time datetime="2026">2026</time>
@@ -51,7 +53,7 @@
         <a class="go" href="#">View source →</a>
       </article>
 
-      <article class="card">
+      <article class="card reveal">
         <div class="top">
           <span class="code">PANEL</span>
           <time datetime="2026">2026</time>
@@ -65,7 +67,7 @@
       <!-- TEMPLATE — talk/panel card. For a confirmed future event, add an
            "Upcoming" chip: <span class="chip chip-locked">Upcoming</span>
            after the date, and remove it once delivered. -->
-      <article class="card">
+      <article class="card reveal">
         <div class="top">
           <span class="code">TALK</span>
           <time datetime="2026">[Month 2026]</time>
@@ -80,13 +82,13 @@
 
   <!-- ============ 2. ARTICLES & CONTRIBUTIONS ============ -->
   <section class="section dissem" id="articles">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Section 02</p>
       <h2>Articles &amp; contributions</h2>
     </div>
     <div class="grid grid-2">
 
-      <article class="card">
+      <article class="card reveal">
         <div class="top">
           <span class="code">CO-AUTHOR</span>
           <time datetime="2025-03">Mar 2025</time>
@@ -98,7 +100,7 @@
 
       <!-- TEMPLATE — article card. Use ARTICLE for bylined pieces,
            CO-AUTHOR for contributions to others' pieces or project blogs. -->
-      <article class="card">
+      <article class="card reveal">
         <div class="top">
           <span class="code">ARTICLE</span>
           <time datetime="2026">[Month 2026]</time>
@@ -113,7 +115,7 @@
 
   <!-- ============ 3. MENTIONS & COVERAGE ============ -->
   <section class="section dissem" id="mentions">
-    <div class="section-head">
+    <div class="section-head reveal">
       <p class="eyebrow">Section 03</p>
       <h2>Mentions &amp; coverage</h2>
     </div>
@@ -121,7 +123,7 @@
 
       <!-- TEMPLATE — mention card. Use MEDIA for press/interviews,
            MENTION for posts by others referencing you or your work. -->
-      <article class="card">
+      <article class="card reveal">
         <div class="top">
           <span class="code">MENTION</span>
           <time datetime="2026">[Month 2026]</time>

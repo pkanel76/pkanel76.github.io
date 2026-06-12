@@ -29,10 +29,15 @@
   <section class="hero" style="padding-block:72px 48px">
     <p class="eyebrow">Public presence</p>
     <h1 style="font-size:clamp(2rem,4.5vw,3.2rem)">Dissemination</h1>
-    <p class="sub">Panels, talks and posts — where the work meets the industry. Each entry links out to the original source.</p>
+    <p class="sub">Talks, articles and coverage — where the work meets the industry. Scientific publications live on their own <a href="publications.html" style="color:var(--accent)">page</a>.</p>
   </section>
 
-  <section class="section dissem">
+  <!-- ============ 1. TALKS & PANELS ============ -->
+  <section class="section dissem" id="talks">
+    <div class="section-head">
+      <p class="eyebrow">Section 01</p>
+      <h2>Talks &amp; panels</h2>
+    </div>
     <div class="grid grid-2">
 
       <article class="card">
@@ -41,7 +46,7 @@
           <time datetime="2026">2026</time>
         </div>
         <h3>Out-of-home delivery in Europe</h3>
-        <p>Panel discussion at WMX Europe on OOH delivery and locker networks — how customer choice is reshaping the last mile.</p>
+        <p>Panel discussion at WMX Europe, Athens, on OOH delivery and locker networks — how customer choice is reshaping the last mile.</p>
         <!-- TODO: add the event / LinkedIn link -->
         <a class="go" href="#">View source →</a>
       </article>
@@ -57,14 +62,72 @@
         <a class="go" href="#">View source →</a>
       </article>
 
-      <!-- TEMPLATE: copy this card for each new LinkedIn post or event -->
+      <!-- TEMPLATE — talk/panel card. For a confirmed future event, add an
+           "Upcoming" chip: <span class="chip chip-locked">Upcoming</span>
+           after the date, and remove it once delivered. -->
       <article class="card">
         <div class="top">
-          <span class="code">POST</span>
+          <span class="code">TALK</span>
           <time datetime="2026">[Month 2026]</time>
         </div>
-        <h3>[Post or appearance title]</h3>
-        <p>[One or two lines on what it covers and why it matters.]</p>
+        <h3>[Talk or panel title]</h3>
+        <p>[Event name, city. One line on the topic.]</p>
+        <a class="go" href="#">View source →</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ 2. ARTICLES & CONTRIBUTIONS ============ -->
+  <section class="section dissem" id="articles">
+    <div class="section-head">
+      <p class="eyebrow">Section 02</p>
+      <h2>Articles &amp; contributions</h2>
+    </div>
+    <div class="grid grid-2">
+
+      <article class="card">
+        <div class="top">
+          <span class="code">CO-AUTHOR</span>
+          <time datetime="2025-03">Mar 2025</time>
+        </div>
+        <h3>Exploring the future of microhubs in last-mile logistics</h3>
+        <p>Insight for the EIT Urban Mobility Marketplace defining what a microhub actually is, with pilots from three Horizon Europe projects — including the GREEN-LOG Athens demo where a shared electric vehicle serves both ACS and FedEx deliveries.</p>
+        <a class="go" href="https://marketplace.eiturbanmobility.eu/insights/exploring-the-future-of-microhubs-in-last-mile-logistics" target="_blank" rel="noopener">Read →</a>
+      </article>
+
+      <!-- TEMPLATE — article card. Use ARTICLE for bylined pieces,
+           CO-AUTHOR for contributions to others' pieces or project blogs. -->
+      <article class="card">
+        <div class="top">
+          <span class="code">ARTICLE</span>
+          <time datetime="2026">[Month 2026]</time>
+        </div>
+        <h3>[Article title]</h3>
+        <p>[Where it was published and one line on what it argues.]</p>
+        <a class="go" href="#">Read →</a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ 3. MENTIONS & COVERAGE ============ -->
+  <section class="section dissem" id="mentions">
+    <div class="section-head">
+      <p class="eyebrow">Section 03</p>
+      <h2>Mentions &amp; coverage</h2>
+    </div>
+    <div class="grid grid-2">
+
+      <!-- TEMPLATE — mention card. Use MEDIA for press/interviews,
+           MENTION for posts by others referencing you or your work. -->
+      <article class="card">
+        <div class="top">
+          <span class="code">MENTION</span>
+          <time datetime="2026">[Month 2026]</time>
+        </div>
+        <h3>[Who mentioned you, where]</h3>
+        <p>[Context in one line — e.g. coverage of a panel, a project post naming ACS's pilot.]</p>
         <a class="go" href="#">View source →</a>
       </article>
 

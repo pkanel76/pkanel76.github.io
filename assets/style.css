@@ -320,3 +320,7 @@ body.depot .btn:hover{background:var(--ink);color:#11161C}
 @media (max-width:979px){
   .route-progress{display:none}
 }
+
+/* two source links side by side at a card's foot */
+.go-row{margin-top:auto;display:flex;gap:16px;flex-wrap:wrap}
+.go-row .go{margin-top:0}

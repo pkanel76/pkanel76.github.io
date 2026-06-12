@@ -291,3 +291,32 @@ body.depot .btn:hover{background:var(--ink);color:#11161C}
   gap:12px;flex-wrap:wrap;padding-block:16px;
 }
 .site-footer span{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+/* ============================================================
+   ROUTE LINE — scroll-drawn red line with section stops.
+   The only feature kept from the v2 design. Desktop only.
+   ============================================================ */
+@media (min-width:980px){
+  main.route{position:relative;padding-left:48px}
+  main.route::before{
+    content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;
+    background:var(--line);
+  }
+  .route-progress{
+    position:absolute;left:7px;top:8px;width:2px;height:0;
+    background:var(--accent);z-index:1;
+  }
+  main.route .section{position:relative}
+  main.route .section::before{
+    content:"";position:absolute;left:-45px;top:-6px;width:10px;height:10px;
+    border-radius:50%;background:var(--paper);border:2px solid var(--line);z-index:2;
+    transition:border-color .3s ease,background .3s ease,box-shadow .3s ease;
+  }
+  main.route .section.lit::before{
+    border-color:var(--accent);background:var(--accent);
+    box-shadow:0 0 0 4px rgba(215,48,31,.16);
+  }
+}
+@media (max-width:979px){
+  .route-progress{display:none}
+}

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encrypt a project — site tools</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .tool{max-width:760px;margin-inline:auto;padding-block:48px;display:flex;flex-direction:column;gap:40px}
+  .tool fieldset{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:var(--card);display:flex;flex-direction:column;gap:14px}
+  .tool legend{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);padding-inline:8px}
+  .tool label{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .tool input[type=text],.tool input[type=password],.tool textarea{
+    font-family:var(--font-mono);font-size:.9rem;background:var(--panel);
+    border:1px solid var(--line);border-radius:4px;color:var(--ink);padding:11px 13px;width:100%;
+  }
+  .tool textarea{min-height:140px;resize:vertical}
+  .tool output{font-family:var(--font-mono);font-size:.8rem;word-break:break-all;background:var(--panel);border:1px dashed var(--line);border-radius:4px;padding:12px;display:block}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">P. Kanellopoulos</a>
+    <span class="chip">Local tool — do not deploy if you prefer</span>
+  </div>
+</header>
+
+<main class="wrap tool">
+
+  <div>
+    <p class="eyebrow">Site tools</p>
+    <h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">Encrypt a project</h1>
+    <p class="muted" style="margin-top:10px;max-width:62ch">Everything here runs locally in your browser — no key or content leaves this page. Use it to turn any HTML file (from Claude, Replit, anywhere) into an encrypted bundle for the workspace.</p>
+  </div>
+
+  <fieldset>
+    <legend>1 · Encrypt an HTML project</legend>
+    <label for="f-file">HTML file</label>
+    <input type="file" id="f-file" accept=".html,.htm">
+    <label for="f-html">…or paste HTML</label>
+    <textarea id="f-html" spellcheck="false" placeholder="&lt;!DOCTYPE html&gt;…"></textarea>
+    <label for="f-slug">Slug (filename, e.g. athens-microhub-note)</label>
+    <input type="text" id="f-slug" spellcheck="false">
+    <label for="f-title">Title (shown before decryption)</label>
+    <input type="text" id="f-title">
+    <label for="f-key">Project key</label>
+    <input type="password" id="f-key" autocomplete="off">
+    <button class="btn btn-accent" type="button" id="enc-btn">Encrypt &amp; download JSON</button>
+    <p class="notice" id="enc-note"></p>
+  </fieldset>
+
+  <fieldset>
+    <legend>2 · Add it to the wall</legend>
+    <p class="muted" style="font-size:.92rem">Put the downloaded <span class="mono">.json</span> in <span class="mono">workspace/projects/</span>, then add an entry to <span class="mono">manifest.json</span>:</p>
+    <output id="manifest-snippet">{ "slug": "…", "title": "…", "source": "Claude", "date": "2026-06", "locker": "A-02" }</output>
+  </fieldset>
+
+  <fieldset>
+    <legend>3 · Hash a gate passphrase</legend>
+    <p class="muted" style="font-size:.92rem">To change the workspace key, hash the new passphrase and paste the result into <span class="mono">GATE_HASH</span> in <span class="mono">workspace/index.html</span>.</p>
+    <label for="g-pass">New gate passphrase</label>
+    <input type="password" id="g-pass" autocomplete="off">
+    <button class="btn" type="button" id="hash-btn">Compute SHA-256</button>
+    <output id="hash-out"></output>
+  </fieldset>
+
+</main>
+
+<script>
+const b64 = (bytes) => btoa(String.fromCharCode(...new Uint8Array(bytes)));
+
+document.getElementById("f-file").addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  document.getElementById("f-html").value = await file.text();
+  if (!document.getElementById("f-slug").value){
+    document.getElementById("f-slug").value = file.name.replace(/\.html?$/i,"").toLowerCase().replace(/[^a-z0-9_-]+/g,"-");
+  }
+});
+
+document.getElementById("enc-btn").addEventListener("click", async () => {
+  const note = document.getElementById("enc-note");
+  const html = document.getElementById("f-html").value;
+  const slug = document.getElementById("f-slug").value.trim().replace(/[^a-zA-Z0-9_-]/g,"");
+  const title = document.getElementById("f-title").value.trim() || slug;
+  const pass = document.getElementById("f-key").value;
+  if (!html || !slug || !pass){ note.textContent = "Need HTML content, a slug and a key."; note.className = "notice err"; return; }
+
+  const iter = 310000;
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  const key = await crypto.subtle.deriveKey({name:"PBKDF2",hash:"SHA-256",salt,iterations:iter}, base, {name:"AES-GCM",length:256}, false, ["encrypt"]);
+  const ct = await crypto.subtle.encrypt({name:"AES-GCM",iv}, key, new TextEncoder().encode(html));
+
+  const bundle = { v:1, kdf:"PBKDF2-SHA256", iter, title, salt:b64(salt), iv:b64(iv), ct:b64(ct) };
+  const blob = new Blob([JSON.stringify(bundle)], {type:"application/json"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `${slug}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  note.textContent = `Done. Saved ${slug}.json — keep the key somewhere safe; it cannot be recovered.`;
+  note.className = "notice ok";
+  document.getElementById("manifest-snippet").textContent =
+    JSON.stringify({slug, title, source:"Claude", date:new Date().toISOString().slice(0,7), locker:"A-0X"});
+});
+
+document.getElementById("hash-btn").addEventListener("click", async () => {
+  const pass = document.getElementById("g-pass").value;
+  if (!pass) return;
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pass));
+  document.getElementById("hash-out").textContent = [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+});
+</script>
+
+</body>
+</html>

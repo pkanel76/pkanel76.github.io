@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Project viewer — Workspace</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="depot">
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">P. Kanellopoulos</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="../index.html">Profile</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../dissemination.html">Dissemination</a>
+      <a href="index.html" aria-current="page">Workspace</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="viewer-bar">
+    <span class="title" id="proj-title">Project</span>
+    <span class="chip chip-locked" id="proj-status">Encrypted</span>
+  </div>
+
+  <section id="keyzone">
+    <p class="notice" style="margin-top:20px">This project is encrypted (AES-256-GCM). Enter its key to open it in the browser. Nothing is sent to a server — decryption happens locally.</p>
+    <div class="keyform">
+      <input type="password" id="proj-key" placeholder="Project key" autocomplete="off" spellcheck="false">
+      <button class="btn btn-accent" id="open-btn" type="button">Open locker</button>
+    </div>
+    <p class="notice err" id="key-error" hidden>That key does not decrypt this project.</p>
+  </section>
+
+  <section id="contentzone" hidden>
+    <iframe class="viewer-frame" id="proj-frame" sandbox="allow-scripts" title="Decrypted project"></iframe>
+    <div class="keyform" style="margin-top:0">
+      <button class="btn" id="share-btn" type="button">Copy share link (includes key)</button>
+      <span class="notice" id="share-note"></span>
+    </div>
+  </section>
+
+  <p style="margin-block:28px"><a class="notice" href="index.html" style="text-decoration:none">← Back to the locker wall</a></p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© 2026 Panagiotis Kanellopoulos</span>
+    <span>Per-project encryption · WebCrypto</span>
+  </div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------
+   Decrypts projects/<slug>.json bundles produced by
+   ../tools/encrypt.html
+   Bundle format: { v:1, kdf:"PBKDF2-SHA256", iter, salt, iv, ct }
+   Share format:  view.html?p=<slug>#k=<key>
+   The key travels in the URL fragment (#), which browsers do
+   not send to the server.
+------------------------------------------------------------ */
+const params = new URLSearchParams(location.search);
+const slug = (params.get("p") || "").replace(/[^a-zA-Z0-9_-]/g, "");
+const titleEl = document.getElementById("proj-title");
+const statusEl = document.getElementById("proj-status");
+const errEl = document.getElementById("key-error");
+let bundle = null;
+let activeKey = "";
+
+const b64ToBytes = (s) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+
+async function loadBundle(){
+  if (!slug){ titleEl.textContent = "No project selected"; return; }
+  try {
+    const res = await fetch(`projects/${slug}.json`, {cache:"no-store"});
+    if (!res.ok) throw new Error(res.status);
+    bundle = await res.json();
+    titleEl.textContent = bundle.title || slug;
+  } catch (err){
+    titleEl.textContent = slug;
+    errEl.textContent = "Could not load this project file. If you opened the site directly from disk, run a local server (python3 -m http.server) or deploy it.";
+    errEl.hidden = false;
+  }
+}
+
+async function deriveKey(pass, salt, iter){
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey(
+    { name:"PBKDF2", hash:"SHA-256", salt, iterations: iter },
+    base, { name:"AES-GCM", length:256 }, false, ["decrypt"]
+  );
+}
+
+async function tryOpen(pass){
+  if (!bundle) return;
+  errEl.hidden = true;
+  try {
+    const key = await deriveKey(pass, b64ToBytes(bundle.salt), bundle.iter || 310000);
+    const plain = await crypto.subtle.decrypt(
+      { name:"AES-GCM", iv: b64ToBytes(bundle.iv) }, key, b64ToBytes(bundle.ct)
+    );
+    const html = new TextDecoder().decode(plain);
+    document.getElementById("proj-frame").srcdoc = html;
+    document.getElementById("keyzone").hidden = true;
+    document.getElementById("contentzone").hidden = false;
+    statusEl.textContent = "Open";
+    statusEl.classList.remove("chip-locked");
+    statusEl.classList.add("chip-ok");
+    activeKey = pass;
+  } catch (err){
+    errEl.textContent = "That key does not decrypt this project.";
+    errEl.hidden = false;
+  }
+}
+
+document.getElementById("open-btn").addEventListener("click", () => {
+  tryOpen(document.getElementById("proj-key").value);
+});
+document.getElementById("proj-key").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") tryOpen(e.target.value);
+});
+
+document.getElementById("share-btn").addEventListener("click", async () => {
+  const link = `${location.origin}${location.pathname}?p=${encodeURIComponent(slug)}#k=${encodeURIComponent(activeKey)}`;
+  try {
+    await navigator.clipboard.writeText(link);
+    document.getElementById("share-note").textContent = "Copied. Anyone with this link can open the project.";
+  } catch {
+    document.getElementById("share-note").textContent = link;
+  }
+});
+
+(async () => {
+  await loadBundle();
+  const m = location.hash.match(/[#&]k=([^&]+)/);
+  if (m && bundle) tryOpen(decodeURIComponent(m[1]));
+})();
+</script>
+
+</body>
+</html>

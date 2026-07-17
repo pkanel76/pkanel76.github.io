@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workspace — Panagiotis Kanellopoulos</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="depot">
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="../index.html">P. Kanellopoulos</a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="../index.html">Profile</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../dissemination.html">Dissemination</a>
+      <a href="index.html" aria-current="page">Workspace</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ GATE ============ -->
+  <section class="gate" id="gate">
+    <p class="eyebrow">Restricted area</p>
+    <h1>Workspace is locked</h1>
+    <p>This section holds working prototypes and project pages. Enter the workspace key to see the locker wall. Each project also has its own key.</p>
+    <form id="gate-form">
+      <label class="notice" for="gate-key">Workspace key</label>
+      <input type="password" id="gate-key" autocomplete="off" spellcheck="false" required>
+      <p class="error" id="gate-error">Incorrect key.</p>
+      <button class="btn btn-accent" type="submit">Unlock</button>
+    </form>
+  </section>
+
+  <!-- ============ LOCKER WALL ============ -->
+  <section class="section" id="wall" hidden>
+    <div class="section-head">
+      <p class="eyebrow">Private workspace</p>
+      <h2>The locker wall</h2>
+      <p class="muted" style="max-width:62ch">Working prototypes from projects built with Claude, Replit and others. Every locker is individually encrypted — opening one needs its own key. Share a project by sending its link plus its key.</p>
+    </div>
+    <div class="locker-wall" id="locker-wall" aria-live="polite"></div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>© 2026 Panagiotis Kanellopoulos</span>
+    <span id="lock-action"><a href="#" id="relock" style="color:inherit">Lock workspace</a></span>
+  </div>
+</footer>
+
+<script>
+/* ------------------------------------------------------------
+   Gate: SHA-256 of the entered key is compared to GATE_HASH.
+   This hides the project list from casual visitors. Real
+   protection is per-project AES-GCM encryption (see view.html).
+   To change the key: open ../tools/encrypt.html, use the
+   "Hash a gate passphrase" section, paste the new hash here.
+   Default demo key: demo-key
+------------------------------------------------------------ */
+const GATE_HASH = "c48a01f49fd0f2cc404bc3cbbc80e91457a3d41bb429a695243de4c61794155c";
+const MIN_CELLS = 8; // pad the wall with empty lockers up to this count
+
+const gate = document.getElementById("gate");
+const wall = document.getElementById("wall");
+const form = document.getElementById("gate-form");
+const errEl = document.getElementById("gate-error");
+
+async function sha256Hex(text){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+async function openWall(){
+  gate.hidden = true;
+  wall.hidden = false;
+  await renderWall();
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const key = document.getElementById("gate-key").value.trim();
+  const hash = await sha256Hex(key);
+  if (hash === GATE_HASH){
+    sessionStorage.setItem("ws-open","1");
+    errEl.classList.remove("show");
+    openWall();
+  } else {
+    errEl.classList.add("show");
+  }
+});
+
+document.getElementById("relock").addEventListener("click", (e) => {
+  e.preventDefault();
+  sessionStorage.removeItem("ws-open");
+  location.reload();
+});
+
+async function renderWall(){
+  const wallEl = document.getElementById("locker-wall");
+  let projects = [];
+  try {
+    const res = await fetch("projects/manifest.json", {cache:"no-store"});
+    projects = (await res.json()).projects || [];
+  } catch (err){
+    wallEl.innerHTML = '<p class="notice err">Could not load the project list. If you opened this file directly from disk, run a local server (python3 -m http.server) or deploy the site.</p>';
+    return;
+  }
+  const cells = [];
+  projects.forEach((p) => {
+    cells.push(`
+      <a class="locker" href="view.html?p=${encodeURIComponent(p.slug)}">
+        <div class="door-top">
+          <span class="cell-code">${p.locker || ""}</span>
+          <span class="vents" aria-hidden="true"></span>
+        </div>
+        <span class="title">${p.title}</span>
+        <span class="meta">${p.source || ""} · ${p.date || ""}</span>
+        <div class="door-bottom">
+          <span class="chip chip-locked">Encrypted</span>
+          <span class="keyhole" aria-hidden="true"></span>
+        </div>
+      </a>`);
+  });
+  for (let i = projects.length; i < MIN_CELLS; i++){
+    const code = String.fromCharCode(65 + Math.floor(i/4)) + "-" + String(i % 4 + 1).padStart(2,"0");
+    cells.push(`
+      <div class="locker empty" aria-hidden="true">
+        <div class="door-top"><span class="cell-code">${code}</span><span class="vents"></span></div>
+        <span class="meta">Empty</span>
+      </div>`);
+  }
+  wallEl.innerHTML = cells.join("");
+}
+
+if (sessionStorage.getItem("ws-open") === "1") openWall();
+</script>
+
+</body>
+</html>

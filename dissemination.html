@@ -3,12 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dissemination — Panagiotis Kanellopoulos</title>
+<title>Dissemination | Panagiotis Kanellopoulos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 <script src="assets/route.js" defer></script>
+<style>
+  .hub{margin:8px 0 8px}
+  .hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  @media(max-width:820px){.hub-grid{grid-template-columns:1fr;gap:16px}}
+  .hubcard{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--radius);overflow:hidden;text-decoration:none;color:inherit;
+    transition:border-color .18s ease,transform .18s ease}
+  .hubcard:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .hubcard:hover .hubcard-img img{opacity:.92}
+  .hubcard:hover .hubcard-go{color:var(--accent)}
+  .hubcard-img{aspect-ratio:16/10;position:relative;overflow:hidden;background:var(--panel);
+    border-bottom:1px solid var(--line)}
+  .hubcard-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+    transition:opacity .18s ease}
+  .hubcard-body{padding:22px 22px 24px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .hubcard-body .code{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent)}
+  .hubcard-body h3{font-size:1.25rem;font-weight:700}
+  .hubcard-body p{color:var(--muted);font-size:.95rem;flex:1}
+  .hubcard-go{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:8px;transition:color .18s ease}
+  .hubcard-go::after{content:"\2193"}
+</style>
 </head>
 <body>
 
@@ -31,8 +54,41 @@
   <section class="hero" style="padding-block:72px 48px">
     <p class="eyebrow">Public presence</p>
     <h1 style="font-size:clamp(2rem,4.5vw,3.2rem)">Dissemination</h1>
-    <p class="sub">Talks, articles and coverage — where the work meets the industry. Scientific publications live on their own <a href="publications.html" style="color:var(--accent)">page</a>.</p>
+    <p class="sub">Talks, articles and coverage: where the work meets the industry. Scientific publications live on their own <a href="publications.html" style="color:var(--accent)">page</a>.</p>
   </section>
+
+  <section class="hub" aria-label="Sections">
+    <div class="hub-grid">
+      <a class="hubcard" href="#talks">
+        <div class="hubcard-img"><img src="assets/dissem/talks.jpg" alt="Presenting at a conference with the GREEN-LOG project"></div>
+        <div class="hubcard-body">
+          <span class="code">10 entries</span>
+          <h3>Talks &amp; panels</h3>
+          <p>Conference talks, panels and workshops on last-mile and urban logistics.</p>
+          <span class="hubcard-go">View talks</span>
+        </div>
+      </a>
+      <a class="hubcard" href="#articles">
+        <div class="hubcard-img"><img src="assets/dissem/articles.jpg" alt="Last-mile logistics article illustration"></div>
+        <div class="hubcard-body">
+          <span class="code">3 entries</span>
+          <h3>Articles</h3>
+          <p>Written pieces and contributions on innovation in delivery and logistics.</p>
+          <span class="hubcard-go">View articles</span>
+        </div>
+      </a>
+      <a class="hubcard" href="#mentions">
+        <div class="hubcard-img"><img src="assets/dissem/mentions.jpg" alt="On a professional panel" style="object-position:center 28%"></div>
+        <div class="hubcard-body">
+          <span class="code">7 entries</span>
+          <h3>Mentions</h3>
+          <p>Press coverage and third-party mentions of ACS innovation work.</p>
+          <span class="hubcard-go">View mentions</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
 
   <!-- ============ 1. TALKS & PANELS ============ -->
   <section class="section dissem" id="talks">
@@ -48,7 +104,7 @@
           <time datetime="2026-06">29 Jun – 3 Jul 2026</time>
         </div>
         <h3>CityMinds Summer School 2026</h3>
-        <p>Invited speaker at the EIT Urban Mobility summer school on smart urban mobility and city logistics, organised by CERTH/HIT and AUTh/LASCM in Thessaloniki — training students from across Europe in innovation and entrepreneurship, from concept to market.</p>
+        <p>Invited speaker at the EIT Urban Mobility summer school on smart urban mobility and city logistics, organised by CERTH/HIT and AUTh/LASCM in Thessaloniki, training students from across Europe in innovation and entrepreneurship, from concept to market.</p>
         <a class="go" href="https://www.cityminds.eu/#speakers" target="_blank" rel="noopener">Speakers →</a>
       </article>
 
@@ -58,7 +114,7 @@
           <time datetime="2026-06">22–24 Jun 2026</time>
         </div>
         <h3>Lockers, PUDO and beyond: the full OOH picture</h3>
-        <p>Panel at WMX Europe 2026 (Grand Hyatt Athens), the international mail &amp; express industry conference — on locker networks, PUDO points and the full out-of-home delivery picture, on a speaker roster spanning European postal CEOs (CTT, Omniva, Pos Malaysia) and OOH players (Bloq.it, BOX NOW, Parcel Locker Central).</p>
+        <p>Panel at WMX Europe 2026 (Grand Hyatt Athens), the international mail &amp; express industry conference, on locker networks, PUDO points and the full out-of-home delivery picture, on a speaker roster spanning European postal CEOs (CTT, Omniva, Pos Malaysia) and OOH players (Bloq.it, BOX NOW, Parcel Locker Central).</p>
         <div class="go-row">
           <a class="go" href="https://www.wmxeurope.com/speakers/" target="_blank" rel="noopener">Speakers →</a>
           <a class="go" href="https://www.flickr.com/photos/132876195@N06/55363017342/in/album-72177720334442106/" target="_blank" rel="noopener">Photo 1 →</a>
@@ -83,7 +139,7 @@
           <time datetime="2026-03">Mar 2026</time>
         </div>
         <h3>1st ITS Hellas co-creation workshop: AI in Mobility</h3>
-        <p>Among the 40+ contributors from industry, public administration, SMEs and academia at ITS Hellas's first co-creation workshop (The American College of Greece, Athens) — thematic tables and brainstorming on the role of AI in the present and future of mobility.</p>
+        <p>Among the 40+ contributors from industry, public administration, SMEs and academia at ITS Hellas's first co-creation workshop (The American College of Greece, Athens): thematic tables and brainstorming on the role of AI in the present and future of mobility.</p>
         <div class="go-row">
           <a class="go" href="https://www.its-hellas.gr/the-only-way-to-do-great-work-is-to-love-what-you-do/" target="_blank" rel="noopener">ITS Hellas (in Greek) →</a>
           <a class="go" href="https://www.linkedin.com/posts/its-hellas_itshellas-ai-smartmobility-activity-7445477746568380416-4rAp" target="_blank" rel="noopener">LinkedIn post →</a>
@@ -96,7 +152,7 @@
           <time datetime="2025-07">Jul 2025</time>
         </div>
         <h3>TRACE and the Greek pilots at the 4th CityMinds Summer School</h3>
-        <p>A 45-minute lecture introducing the Horizon Europe TRACE project and insights from the Greek pilot activities — microhubs and mobile depots, digital platforms and robotics, data analytics for urban delivery — including synergies with GREEN-LOG. Delivered to 30–50 in-person participants plus a virtual audience, and recorded.</p>
+        <p>A 45-minute lecture introducing the Horizon Europe TRACE project and insights from the Greek pilot activities (microhubs and mobile depots, digital platforms and robotics, data analytics for urban delivery), including synergies with GREEN-LOG. Delivered to 30–50 in-person participants plus a virtual audience, and recorded.</p>
         <a class="go" href="https://trace-horizon.eu/trace-at-cityminds-summer-school-sharing-innovation-in-sustainable-urban-logistics/" target="_blank" rel="noopener">TRACE coverage →</a>
       </article>
 
@@ -106,7 +162,7 @@
           <time datetime="2025-05">May 2025</time>
         </div>
         <h3>10th ITS Hellas Conference: transport &amp; logistics</h3>
-        <p>Panelist at the annual national conference on intelligent transport systems (Royal Olympic Hotel, Athens, 7–8 May 2025), themed "Competitiveness, Accessibility, Resilience in Transports and Logistics" — co-organised by CERTH/HIT and ICCS/NTUA under the auspices of the European Commission's Representation in Greece.</p>
+        <p>Panelist at the annual national conference on intelligent transport systems (Royal Olympic Hotel, Athens, 7–8 May 2025), themed "Competitiveness, Accessibility, Resilience in Transports and Logistics", co-organised by CERTH/HIT and ICCS/NTUA under the auspices of the European Commission's Representation in Greece.</p>
         <a class="go" href="https://www.linkedin.com/posts/panagiotis-kanellopoulos-3a34735b_itshellas2025-supplychain-logistics-activity-7326238024663494656-j0w5" target="_blank" rel="noopener">LinkedIn post →</a>
       </article>
 
@@ -116,7 +172,7 @@
           <time datetime="2025-05">May 2025</time>
         </div>
         <h3>Urban last-mile delivery: collaborative models and emerging trends</h3>
-        <p>Panel at the 21st FSDET student conference of the Athens University of Economics &amp; Business (Eugenides Foundation, 450+ participants) — ACS and FedEx side by side, moderated by ELTRUN, on the collaborative models and innovative approaches courier companies use to serve customers better.</p>
+        <p>Panel at the 21st FSDET student conference of the Athens University of Economics &amp; Business (Eugenides Foundation, 450+ participants): ACS and FedEx side by side, moderated by ELTRUN, on the collaborative models and innovative approaches courier companies use to serve customers better.</p>
         <a class="go" href="https://fsdet.dmst.aueb.gr/?page_id=3524" target="_blank" rel="noopener">Press release (in Greek) →</a>
       </article>
 
@@ -126,7 +182,7 @@
           <time datetime="2024-10">Oct 2024</time>
         </div>
         <h3>Retail Innovation Unleashed</h3>
-        <p>Panel at the 2nd Retail Innovation Hub Summit, representing ACS alongside executives from Nova and Hondos Center — how retail and delivery companies use technology to improve customer experience and operations.</p>
+        <p>Panel at the 2nd Retail Innovation Hub Summit, representing ACS alongside executives from Nova and Hondos Center, on how retail and delivery companies use technology to improve customer experience and operations.</p>
         <a class="go" href="https://www.liberal.gr/epiheiriseis/retail-innovation-hub-i-kainotomia-anebazei-rythmoys-sto-oikosystima-ton-pliromon" target="_blank" rel="noopener">Event coverage (in Greek) →</a>
       </article>
 
@@ -136,7 +192,7 @@
           <time datetime="2024-07">Jul 2024</time>
         </div>
         <h3>ACS last mile: innovation perspectives and challenges</h3>
-        <p>Lecture at the 3rd Summer School of Digital Supply Chain and Logistics Management in Thessaloniki — the predecessor of CityMinds, organised by CERTH/HIT — presenting ACS's last-mile innovation perspective and the GREEN-LOG project to logistics students and researchers.</p>
+        <p>Lecture at the 3rd Summer School of Digital Supply Chain and Logistics Management in Thessaloniki (the predecessor of CityMinds, organised by CERTH/HIT), presenting ACS's last-mile innovation perspective and the GREEN-LOG project to logistics students and researchers.</p>
         <a class="go" href="https://greenlog-project.eu/green-log-summer-school-logistics-management/" target="_blank" rel="noopener">GREEN-LOG coverage →</a>
       </article>
 
@@ -145,14 +201,14 @@
           <span class="code">TALK</span>
           <time datetime="2023-07">Jul 2023</time>
         </div>
-        <h3>The last mile challenges — case study: ACS</h3>
-        <p>A 45-minute lecture at the 2nd Summer School of Digital Supply Chain and Logistics Management (CERTH/HIT &amp; LASCM/AUTh, Thessaloniki) on last-mile challenges and ACS's innovation portfolio — including the TRANSFARENCY project's blockchain functionalities for parcel track-and-trace, recipient changes and temperature monitoring of sensitive packages.</p>
+        <h3>The last mile challenges - case study: ACS</h3>
+        <p>A 45-minute lecture at the 2nd Summer School of Digital Supply Chain and Logistics Management (CERTH/HIT &amp; LASCM/AUTh, Thessaloniki) on last-mile challenges and ACS's innovation portfolio, including the TRANSFARENCY project's blockchain functionalities for parcel track-and-trace, recipient changes and temperature monitoring of sensitive packages.</p>
         <div class="go-row">
           <a class="go" href="https://transfarency-project.gr/2023/07/21/dsclm/" target="_blank" rel="noopener">TRANSFARENCY coverage (in Greek) →</a>
           <a class="go" href="https://www.dsclm.imet.gr/2023/" target="_blank" rel="noopener">Event page →</a>
         </div>
       </article>
-      <!-- TEMPLATE — talk/panel card. For a confirmed future event, add an
+      <!-- TEMPLATE: talk/panel card. For a confirmed future event, add an
            "Upcoming" chip: <span class="chip chip-locked">Upcoming</span>
            after the date, and remove it once delivered. -->
       <article class="card">
@@ -182,7 +238,7 @@
           <time datetime="2025">2025</time>
         </div>
         <h3>Driving sustainability: transforming last-mile delivery in Athens through GREEN-LOG</h3>
-        <p>Article for the GREEN-LOG project on the Athens Living Lab: ACS partnering with FedEx and DAEM (City of Athens IT company) on a shared micro-consolidation centre, smart lockers, and a white-label electric vehicle shared between the two couriers — with AUEB analysing routing data to quantify emissions reductions.</p>
+        <p>Article for the GREEN-LOG project on the Athens Living Lab: ACS partnering with FedEx and DAEM (City of Athens IT company) on a shared micro-consolidation centre, smart lockers, and a white-label electric vehicle shared between the two couriers, with AUEB analysing routing data to quantify emissions reductions.</p>
         <a class="go" href="https://greenlog-project.eu/driving-sustainability-transforming-last-mile-delivery-in-athens-through-green-log/" target="_blank" rel="noopener">Read →</a>
       </article>
 
@@ -192,11 +248,11 @@
           <time datetime="2025-03">Mar 2025</time>
         </div>
         <h3>Exploring the future of microhubs in last-mile logistics</h3>
-        <p>Insight for the EIT Urban Mobility Marketplace defining what a microhub actually is, with pilots from three Horizon Europe projects — including the GREEN-LOG Athens demo where a shared electric vehicle serves both ACS and FedEx deliveries.</p>
+        <p>Insight for the EIT Urban Mobility Marketplace defining what a microhub actually is, with pilots from three Horizon Europe projects, including the GREEN-LOG Athens demo where a shared electric vehicle serves both ACS and FedEx deliveries.</p>
         <a class="go" href="https://marketplace.eiturbanmobility.eu/insights/exploring-the-future-of-microhubs-in-last-mile-logistics" target="_blank" rel="noopener">Read →</a>
       </article>
 
-      <!-- TEMPLATE — article card. Use ARTICLE for bylined pieces,
+      <!-- TEMPLATE: article card. Use ARTICLE for bylined pieces,
            CO-AUTHOR for contributions to others' pieces or project blogs. -->
       <article class="card">
         <div class="top">
@@ -255,7 +311,7 @@
           <time datetime="2024-05">May 2024</time>
         </div>
         <h3>ACS and the EU DISCO project: investing in smart urban deliveries</h3>
-        <p>Interview with makthes.gr on ACS's role in the Horizon Europe DISCO project in Thessaloniki — relocating the central branch to the TIF grounds, and working with CERTH's Hellenic Institute of Transport and the City of Thessaloniki on sustainable last-mile delivery.</p>
+        <p>Interview with makthes.gr on ACS's role in the Horizon Europe DISCO project in Thessaloniki: relocating the central branch to the TIF grounds, and working with CERTH's Hellenic Institute of Transport and the City of Thessaloniki on sustainable last-mile delivery.</p>
         <a class="go" href="https://www.emakedonia.gr/i-acs-me-to-eyropaiko-disco-paei-deth-ependyontas-stis-exypnes-astikes-dianomes-703245" target="_blank" rel="noopener">Read (in Greek) →</a>
       </article>
 
@@ -265,7 +321,7 @@
           <time datetime="2024-04">Apr 2024</time>
         </div>
         <h3>DISCO General Assembly visits the Thessaloniki Living Lab</h3>
-        <p>The DISCO project's coverage of its General Assembly in Thessaloniki (22–23 April 2024), where ACS hosted part of the consortium's site visit — demonstrating the locker installation at TIF-Helexpo and the new hub, relocated through the WareM&amp;O demand-matching tool developed with CERTH.</p>
+        <p>The DISCO project's coverage of its General Assembly in Thessaloniki (22–23 April 2024), where ACS hosted part of the consortium's site visit, demonstrating the locker installation at TIF-Helexpo and the new hub, relocated through the WareM&amp;O demand-matching tool developed with CERTH.</p>
         <a class="go" href="https://discoprojecteu.com/disco-convenes-successful-project-meeting-in-thessaloniki/" target="_blank" rel="noopener">Read →</a>
       </article>
 
@@ -275,7 +331,7 @@
           <time datetime="2024-04">Apr 2024</time>
         </div>
         <h3>Towards sustainable last-mile delivery: insights from GREEN-LOG workshops</h3>
-        <p>CIVITAS — the EU's urban mobility initiative — reviews the co-creation workshops across all five GREEN-LOG Living Labs, naming ACS as leader of the Athens Living Lab, where shared micro-consolidation centres and electric vehicles are being introduced to the city's parcel distribution.</p>
+        <p>CIVITAS, the EU's urban mobility initiative, reviews the co-creation workshops across all five GREEN-LOG Living Labs, naming ACS as leader of the Athens Living Lab, where shared micro-consolidation centres and electric vehicles are being introduced to the city's parcel distribution.</p>
         <a class="go" href="https://civitas.eu/news/towards-sustainable-last-mile-delivery-insights-from-green-log-workshops" target="_blank" rel="noopener">Read →</a>
       </article>
 
@@ -285,11 +341,11 @@
           <time datetime="2024-02">Feb 2024</time>
         </div>
         <h3>Key takeaways from the GREEN-LOG workshop in Athens</h3>
-        <p>The GREEN-LOG project's report from the Athens co-creation workshop, hosted at ACS premises and organised with the University of the Aegean — stakeholders mapped real delivery pain points and shaped the pilot's options: shared micro-consolidation centres, mobile depots, cargo bikes and lockers.</p>
+        <p>The GREEN-LOG project's report from the Athens co-creation workshop, hosted at ACS premises and organised with the University of the Aegean, where stakeholders mapped real delivery pain points and shaped the pilot's options: shared micro-consolidation centres, mobile depots, cargo bikes and lockers.</p>
         <a class="go" href="https://greenlog-project.eu/key-takeaways-from-green-log-workshop-in-athens-unveiled/" target="_blank" rel="noopener">Read →</a>
       </article>
 
-      <!-- TEMPLATE — mention card. Use MEDIA for press/interviews,
+      <!-- TEMPLATE: mention card. Use MEDIA for press/interviews,
            MENTION for posts by others referencing you or your work. -->
       <article class="card">
         <div class="top">
@@ -297,7 +353,7 @@
           <time datetime="2026">[Month 2026]</time>
         </div>
         <h3>[Who mentioned you, where]</h3>
-        <p>[Context in one line — e.g. coverage of a panel, a project post naming ACS's pilot.]</p>
+        <p>[Context in one line, e.g. coverage of a panel, a project post naming ACS's pilot.]</p>
         <a class="go" href="#">View source →</a>
       </article>
 
@@ -308,7 +364,7 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <span>PKAN · ATH · 2026</span>
+    <span>© 2026 Panagiotis Kanellopoulos</span>
     <span>Built as a working tool, not a brochure.</span>
   </div>
 </footer>

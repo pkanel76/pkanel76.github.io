@@ -3,194 +3,153 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panagiotis Kanellopoulos — Head of Innovation, ACS Courier &amp; Postal Services</title>
-<meta name="description" content="Panagiotis Kanellopoulos. Head of Innovation and AI Ambassador at ACS Courier & Postal Services. Last-mile delivery, out-of-home networks, urban logistics, EU-funded R&D and applied AI — Athens, Greece.">
+<title>Workspace — Panagiotis Kanellopoulos</title>
+<meta name="robots" content="noindex,nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<script src="assets/route.js" defer></script>
-<style>
-  /* hero with portrait */
-  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center}
-  .hero-photo{position:relative;max-width:360px;justify-self:end}
-  .hero-photo img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--line)}
-  .hero-photo::after{
-    content:"";position:absolute;right:-10px;bottom:-10px;width:56px;height:56px;
-    background:var(--accent);z-index:-1;border-radius:4px;
-  }
-  @media (max-width:760px){
-    .hero-grid{grid-template-columns:1fr;gap:32px}
-    .hero-photo{justify-self:start;max-width:300px}
-  }
-</style>
+<link rel="stylesheet" href="../assets/style.css">
 </head>
-<body>
+<body class="depot">
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="index.html">P. Kanellopoulos</a>
+    <a class="brand" href="../index.html">P. Kanellopoulos</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="index.html" aria-current="page">Profile</a>
-      <a href="publications.html">Publications</a>
-      <a href="dissemination.html">Dissemination</a>
-      <a href="workspace/index.html">Workspace</a>
-      <a href="contact.html">Contact</a>
+      <a href="../index.html">Profile</a>
+      <a href="../publications.html">Publications</a>
+      <a href="../dissemination.html">Dissemination</a>
+      <a href="index.html" aria-current="page">Workspace</a>
+      <a href="../contact.html">Contact</a>
     </nav>
   </div>
 </header>
 
-<main class="wrap route">
-  <span class="route-progress" aria-hidden="true"></span>
+<main class="wrap">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow">Athens, GR · Innovation · Last-mile logistics</p>
-        <h1>Panagiotis Kanellopoulos</h1>
-        <p class="role">Head of Innovation and AI Ambassador at ACS Courier &amp; Postal Services, and the company's representative to iQnovus, the Quest Group innovation centre. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
-        <p class="sub">My route here went through more than a decade in medical-sector sales and product management, then ACS corporate sales. So I look at every pilot from two sides at once: does it work operationally, and does it create value for the customer and the business. Outside the day job: agentic AI, Python, blockchain, Web3 and IoT.</p>
-        <div class="hero-actions">
-          <a class="btn btn-accent" href="contact.html">Get in touch</a>
-          <a class="btn" href="workspace/index.html">Private workspace</a>
-        </div>
-      </div>
-      <figure class="hero-photo">
-        <img src="assets/profile.jpg" alt="Panagiotis Kanellopoulos" width="800" height="1000" fetchpriority="high">
-      </figure>
-    </div>
+  <!-- ============ GATE ============ -->
+  <section class="gate" id="gate">
+    <p class="eyebrow">Restricted area</p>
+    <h1>Workspace is locked</h1>
+    <p>This section holds working prototypes and project pages. Enter the workspace key to see the locker wall. Each project also has its own key.</p>
+    <form id="gate-form">
+      <label class="notice" for="gate-key">Workspace key</label>
+      <input type="password" id="gate-key" autocomplete="off" spellcheck="false" required>
+      <p class="error" id="gate-error">Incorrect key.</p>
+      <button class="btn btn-accent" type="submit">Unlock</button>
+    </form>
   </section>
 
-  <!-- ============ FOCUS ============ -->
-  <section class="section" id="focus">
+  <!-- ============ LOCKER WALL ============ -->
+  <section class="section" id="wall" hidden>
     <div class="section-head">
-      <p class="eyebrow">Focus areas</p>
-      <h2>What I work on</h2>
+      <p class="eyebrow">Private workspace</p>
+      <h2>The locker wall</h2>
+      <p class="muted" style="max-width:62ch">Working prototypes from projects built with Claude, Replit and others. Encrypted lockers need their own key to open; live lockers open a running app or page directly. Share an encrypted project by sending its link plus its key.</p>
     </div>
-    <div class="grid grid-2">
-      <article class="card">
-        <span class="code">OOH</span>
-        <h3>Out-of-home delivery &amp; locker networks</h3>
-        <p>Strategy and operations for locker-based delivery: network design, customer adoption, and routing parcels to where people actually want them.</p>
-      </article>
-      <article class="card">
-        <span class="code">URBAN</span>
-        <h3>Urban logistics pilots</h3>
-        <p>Piloting new delivery models in dense city environments — micro-hubs, consolidated flows, low-emission last mile — with Athens as the main testbed.</p>
-      </article>
-      <article class="card">
-        <span class="code">EU R&amp;D</span>
-        <h3>EU-funded research &amp; innovation</h3>
-        <p>Horizon Europe and national projects: shaping proposals, coordinating pilots and partners, and delivering on time and in budget — with claims a courier operator can credibly stand behind.</p>
-      </article>
-      <article class="card">
-        <span class="code">ADOPT</span>
-        <h3>From pilot to operations</h3>
-        <p>The hard part of innovation: moving ideas out of the demo phase and into daily operations, working with startups, universities, research centres, technology providers and public authorities.</p>
-      </article>
-      <article class="card">
-        <span class="code">AI</span>
-        <h3>Applied AI &amp; agentic tools</h3>
-        <p>As ACS's AI Ambassador, driving the adoption of AI across the organisation — internal tools, agentic workflows, and hands-on prototypes that bring AI into everyday logistics and innovation work.</p>
-      </article>
-    </div>
-  </section>
-
-  <!-- ============ PROJECTS ============ -->
-  <section class="section" id="projects">
-    <div class="section-head">
-      <p class="eyebrow">Project portfolio</p>
-      <h2>EU &amp; national projects</h2>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:20px">
-      <div>
-        <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Horizon Europe</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="chip">PANACEA</span>
-          <span class="chip">URBANE</span>
-          <span class="chip">DISCO</span>
-          <span class="chip">TRACE</span>
-          <span class="chip">GREEN-LOG</span>
-        </div>
-      </div>
-      <div>
-        <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Greek &amp; EU co-funded</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="chip">TRANSFARENCY</span>
-          <span class="chip">INCOMPOSE · M&amp;L Cluster</span>
-        </div>
-      </div>
-      <p class="muted" style="max-width:62ch;font-size:.95rem">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>
-    </div>
-  </section>
-
-  <!-- ============ BACKGROUND ============ -->
-  <section class="section" id="background">
-    <div class="section-head">
-      <p class="eyebrow">Background</p>
-      <h2>The route so far</h2>
-    </div>
-    <ol class="timeline">
-      <li>
-        <span class="when">2026 – present · ACS</span>
-        <h3>AI Ambassador</h3>
-        <p>Leading the adoption of AI across ACS: internal tools and agentic workflows, hands-on experimentation, and helping teams build AI into their daily work.</p>
-      </li>
-      <li>
-        <span class="when">2023 – present · ACS</span>
-        <h3>Innovation Management — Head of Innovation</h3>
-        <p>Funding opportunity exploration, pilot design, proposal coordination and management of granted projects — partners, consortium meetings, deliverables, on time and in budget. Plus ecosystem building with startups, academia, research centres and public authorities.</p>
-      </li>
-      <li>
-        <span class="when">2021 – 2023 · ACS</span>
-        <h3>Innovation Lead</h3>
-        <p>Opening up the company's innovation process in close collaboration with iQnovus, the Quest Group innovation centre — building the mechanisms and culture for new technologies, alongside first Horizon EU participations.</p>
-      </li>
-      <li>
-        <span class="when">2016 – 2023 · ACS</span>
-        <h3>Corporate Sales</h3>
-        <p>Public and private tenders, new business, and ACS special projects: biological substances, blood samples and pharma deliveries (ACS Medi Express).</p>
-      </li>
-      <li>
-        <span class="when">2005 – 2016 · Medical devices sector</span>
-        <h3>Sales &amp; product management</h3>
-        <p>Over a decade across medical device companies (Vamvas Medicals, 4MED, Oxymed, MEDIWAY and others): product management, sales, training teams and supporting surgeons — mainly surgical and laparoscopic products.</p>
-      </li>
-      <li>
-        <span class="when">2002 – 2005</span>
-        <h3>Physical education &amp; fitness</h3>
-        <p>PE teacher in primary schools (Rhodes, Athens) and fitness instructor/manager — where the sports science foundation comes from.</p>
-      </li>
-    </ol>
-  </section>
-
-  <!-- ============ CREDENTIALS ============ -->
-  <section class="section" id="credentials">
-    <div class="section-head">
-      <p class="eyebrow">Credentials</p>
-      <h2>Education &amp; certifications</h2>
-    </div>
-    <ul class="cred-list">
-      <li><span class="what">MSc, Health &amp; Physical Education</span><span class="who">Democritus University of Thrace · 2018–2021</span></li>
-      <li><span class="what">BSc, Physical Education Teaching &amp; Coaching</span><span class="who">University of Athens · 1996–2000</span></li>
-      <li><span class="what">In-house Mini MBA, Business Administration</span><span class="who">ALBA Graduate Business School · 2019</span></li>
-      <li><span class="what">CS50: Introduction to Computer Science</span><span class="who">HarvardX</span></li>
-      <li><span class="what">CS50: Introduction to Programming with Python</span><span class="who">HarvardX</span></li>
-      <li><span class="what">CS50: Introduction to AI with Python</span><span class="who">HarvardX</span></li>
-      <li><span class="what">Blockchain (MOOC)</span><span class="who">University of Nicosia · 2024</span></li>
-      <li><span class="what">Languages</span><span class="who">Greek (native) · English (full professional) · Spanish (elementary)</span></li>
-    </ul>
+    <div class="locker-wall" id="locker-wall" aria-live="polite"></div>
   </section>
 
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <span>PKAN · ATH · 2026</span>
-    <span>Built as a working tool, not a brochure.</span>
+    <span>© 2026 Panagiotis Kanellopoulos</span>
+    <span id="lock-action"><a href="#" id="relock" style="color:inherit">Lock workspace</a></span>
   </div>
 </footer>
+
+<script>
+/* ------------------------------------------------------------
+   Gate: SHA-256 of the entered key is compared to GATE_HASH.
+   This hides the project list from casual visitors. Real
+   protection is per-project AES-GCM encryption (see view.html).
+   To change the key: open ../tools/encrypt.html, use the
+   "Hash a gate passphrase" section, paste the new hash here.
+   Default demo key: demo-key
+------------------------------------------------------------ */
+const GATE_HASH = "c48a01f49fd0f2cc404bc3cbbc80e91457a3d41bb429a695243de4c61794155c";
+const MIN_CELLS = 8; // pad the wall with empty lockers up to this count
+
+const gate = document.getElementById("gate");
+const wall = document.getElementById("wall");
+const form = document.getElementById("gate-form");
+const errEl = document.getElementById("gate-error");
+
+async function sha256Hex(text){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,"0")).join("");
+}
+
+async function openWall(){
+  gate.hidden = true;
+  wall.hidden = false;
+  await renderWall();
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const key = document.getElementById("gate-key").value.trim();
+  const hash = await sha256Hex(key);
+  if (hash === GATE_HASH){
+    sessionStorage.setItem("ws-open","1");
+    errEl.classList.remove("show");
+    openWall();
+  } else {
+    errEl.classList.add("show");
+  }
+});
+
+document.getElementById("relock").addEventListener("click", (e) => {
+  e.preventDefault();
+  sessionStorage.removeItem("ws-open");
+  location.reload();
+});
+
+async function renderWall(){
+  const wallEl = document.getElementById("locker-wall");
+  let projects = [];
+  try {
+    const res = await fetch("projects/manifest.json", {cache:"no-store"});
+    projects = (await res.json()).projects || [];
+  } catch (err){
+    wallEl.innerHTML = '<p class="notice err">Could not load the project list. If you opened this file directly from disk, run a local server (python3 -m http.server) or deploy the site.</p>';
+    return;
+  }
+  const cells = [];
+  projects.forEach((p) => {
+    const external = !!p.url;
+    const href  = external ? p.url : `view.html?p=${encodeURIComponent(p.slug)}`;
+    const attrs = external ? ` target="_blank" rel="noopener"` : "";
+    const bottom = external
+      ? `<span class="chip chip-ok">${p.chip || "Open \u2197"}</span>`
+      : `<span class="chip chip-locked">Encrypted</span><span class="keyhole" aria-hidden="true"></span>`;
+    cells.push(`
+      <a class="locker" href="${href}"${attrs}>
+        <div class="door-top">
+          <span class="cell-code">${p.locker || ""}</span>
+          <span class="vents" aria-hidden="true"></span>
+        </div>
+        <span class="title">${p.title}</span>
+        <span class="meta">${p.source || ""} · ${p.date || ""}</span>
+        <div class="door-bottom">
+          ${bottom}
+        </div>
+      </a>`);
+  });
+  for (let i = projects.length; i < MIN_CELLS; i++){
+    const code = String.fromCharCode(65 + Math.floor(i/4)) + "-" + String(i % 4 + 1).padStart(2,"0");
+    cells.push(`
+      <div class="locker empty" aria-hidden="true">
+        <div class="door-top"><span class="cell-code">${code}</span><span class="vents"></span></div>
+        <span class="meta">Empty</span>
+      </div>`);
+  }
+  wallEl.innerHTML = cells.join("");
+}
+
+if (sessionStorage.getItem("ws-open") === "1") openWall();
+</script>
 
 </body>
 </html>

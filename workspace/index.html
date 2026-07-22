@@ -45,7 +45,7 @@
     <div class="section-head">
       <p class="eyebrow">Private workspace</p>
       <h2>The locker wall</h2>
-      <p class="muted" style="max-width:62ch">Working prototypes from projects built with Claude, Replit and others. Every locker is individually encrypted — opening one needs its own key. Share a project by sending its link plus its key.</p>
+      <p class="muted" style="max-width:62ch">Working prototypes from projects built with Claude, Replit and others. Encrypted lockers need their own key to open; live lockers open a running app or page directly. Share an encrypted project by sending its link plus its key.</p>
     </div>
     <div class="locker-wall" id="locker-wall" aria-live="polite"></div>
   </section>
@@ -54,7 +54,7 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <span>PKAN · ATH · 2026</span>
+    <span>© 2026 Panagiotis Kanellopoulos</span>
     <span id="lock-action"><a href="#" id="relock" style="color:inherit">Lock workspace</a></span>
   </div>
 </footer>
@@ -118,8 +118,14 @@ async function renderWall(){
   }
   const cells = [];
   projects.forEach((p) => {
+    const external = !!p.url;
+    const href  = external ? p.url : `view.html?p=${encodeURIComponent(p.slug)}`;
+    const attrs = external ? ` target="_blank" rel="noopener"` : "";
+    const bottom = external
+      ? `<span class="chip chip-ok">${p.chip || "Open \u2197"}</span>`
+      : `<span class="chip chip-locked">Encrypted</span><span class="keyhole" aria-hidden="true"></span>`;
     cells.push(`
-      <a class="locker" href="view.html?p=${encodeURIComponent(p.slug)}">
+      <a class="locker" href="${href}"${attrs}>
         <div class="door-top">
           <span class="cell-code">${p.locker || ""}</span>
           <span class="vents" aria-hidden="true"></span>
@@ -127,8 +133,7 @@ async function renderWall(){
         <span class="title">${p.title}</span>
         <span class="meta">${p.source || ""} · ${p.date || ""}</span>
         <div class="door-bottom">
-          <span class="chip chip-locked">Encrypted</span>
-          <span class="keyhole" aria-hidden="true"></span>
+          ${bottom}
         </div>
       </a>`);
   });

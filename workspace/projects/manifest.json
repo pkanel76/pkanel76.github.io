@@ -1,11 +1,20 @@
 {
   "projects": [
     {
+      "slug": "acs-pang",
+      "title": "ACS Pang",
+      "source": "Browser game",
+      "date": "2026-07",
+      "locker": "A-01",
+      "url": "acs_pang.html",
+      "chip": "Play ↗"
+    },
+    {
       "slug": "athens-microhub-note",
-      "title": "Athens micro-hub coverage — working note",
+      "title": "Athens micro-hub coverage: working note",
       "source": "Claude · sample",
       "date": "2026-06",
-      "locker": "A-01"
+      "locker": "A-02"
     }
   ]
 }

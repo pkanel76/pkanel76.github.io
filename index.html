@@ -23,6 +23,27 @@
     .hero-grid{grid-template-columns:1fr;gap:32px}
     .hero-photo{justify-self:start;max-width:300px}
   }
+
+  /* project logos */
+  .logo-row{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+  .logo-tile{
+    display:inline-flex;align-items:center;justify-content:center;
+    min-width:120px;max-width:100%;padding:16px 22px;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+  }
+  .logo-tile img{height:38px;width:auto;max-width:100%;object-fit:contain;display:block}
+  .logo-tile:hover{transform:translateY(-2px);border-color:#CBD0C6;box-shadow:0 6px 16px rgba(22,29,38,.07)}
+  /* greys at rest, colour on hover — only where hover exists (desktop);
+     touch devices fall through to full colour */
+  @media (hover:hover){
+    .logo-tile img{filter:grayscale(1) opacity(.5);transition:filter .25s ease,opacity .25s ease}
+    .logo-tile:hover img{filter:grayscale(0) opacity(1)}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .logo-tile,.logo-tile img{transition:none}
+    .logo-tile:hover{transform:none}
+  }
 </style>
 </head>
 <body>
@@ -106,19 +127,19 @@
     <div style="display:flex;flex-direction:column;gap:20px">
       <div>
         <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Horizon Europe</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="chip">PANACEA</span>
-          <span class="chip">URBANE</span>
-          <span class="chip">DISCO</span>
-          <span class="chip">TRACE</span>
-          <span class="chip">GREEN-LOG</span>
+        <div class="logo-row">
+          <div class="logo-tile"><img src="assets/logos/panacea.png" alt="PANACEA"></div>
+          <div class="logo-tile"><img src="assets/logos/urbane.png" alt="URBANE"></div>
+          <div class="logo-tile"><img src="assets/logos/disco.png" alt="DISCO"></div>
+          <div class="logo-tile"><img src="assets/logos/trace.png" alt="TRACE"></div>
+          <div class="logo-tile"><img src="assets/logos/green-log.png" alt="GREEN-LOG"></div>
         </div>
       </div>
       <div>
         <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Greek &amp; EU co-funded</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <span class="chip">TRANSFARENCY</span>
-          <span class="chip">INCOMPOSE · M&amp;L Cluster</span>
+        <div class="logo-row">
+          <div class="logo-tile"><img src="assets/logos/transfarency.png" alt="TRANSFARENCY"></div>
+          <div class="logo-tile"><img src="assets/logos/ml-cluster.png" alt="INCOMPOSE · M&amp;L Cluster"></div>
         </div>
       </div>
       <p class="muted" style="max-width:62ch;font-size:.95rem">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>

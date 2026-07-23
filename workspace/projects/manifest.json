@@ -21,11 +21,21 @@
       "img": "img/inflows.jpg"
     },
     {
+      "slug": "ai-pipeline",
+      "title": "AI idea pipeline console",
+      "source": "Innovation tool",
+      "date": "2026-07",
+      "locker": "A-03",
+      "url": "ai-pipeline-console.html",
+      "chip": "Open ↗",
+      "img": "img/pipeline.jpg"
+    },
+    {
       "slug": "athens-microhub-note",
       "title": "Athens micro-hub coverage: working note",
       "source": "Claude · sample",
       "date": "2026-06",
-      "locker": "A-03"
+      "locker": "A-04"
     }
   ]
 }

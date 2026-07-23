@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Idea Pipeline — ACS Innovation</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFCMUYyNCIvPjxsaW5lIHgxPSI4IiB5MT0iMTYiIHgyPSIyNCIgeTI9IjE2IiBzdHJva2U9IiM1QjZCN0EiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjkiIGN5PSIxNiIgcj0iNC4yIiBmaWxsPSIjRTIwMDFBIi8+PGNpcmNsZSBjeD0iMTciIGN5PSIxNiIgcj0iMyIgZmlsbD0iI0VFRjFGNCIvPjxjaXJjbGUgY3g9IjI0LjUiIGN5PSIxNiIgcj0iMi42IiBmaWxsPSJub25lIiBzdHJva2U9IiNFRUYxRjQiIHN0cm9rZS13aWR0aD0iMS44Ii8+PC9zdmc+">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B1F24;
+  --paper:#EEF1F4;
+  --card:#FFFFFF;
+  --line:#D8DEE4;
+  --muted:#5B6B7A;
+  --red:#E2001A;
+  --red-dark:#B00014;
+  --green:#1E7F4F;
+  --amber:#B26A00;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);font-size:15px;line-height:1.45}
+button{font-family:inherit;font-size:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* ---------- header ---------- */
+header{background:var(--ink);color:#fff;padding:0 24px}
+.hd-top{display:flex;align-items:center;gap:16px;height:60px}
+.hd-mark{width:14px;height:14px;background:var(--red);flex:none}
+.hd-title{font-weight:800;font-size:17px;letter-spacing:.02em}
+.hd-sub{font-family:var(--mono);font-size:11px;color:#9AA7B2;letter-spacing:.08em;text-transform:uppercase}
+.hd-actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid transparent;border-radius:6px;padding:8px 14px;font-weight:600;font-size:13.5px;background:#2A3138;color:#fff;transition:background .15s}
+.btn:hover{background:#39424B}
+.btn-red{background:var(--red)}
+.btn-red:hover{background:var(--red-dark)}
+.btn-ghost{background:transparent;border-color:#3B454E;color:#C7D0D8}
+.btn-ghost:hover{background:#2A3138}
+.tabs{display:flex;gap:2px}
+.tab{background:transparent;border:none;color:#9AA7B2;font-weight:600;font-size:14px;padding:12px 18px;border-bottom:3px solid transparent}
+.tab:hover{color:#fff}
+.tab.on{color:#fff;border-bottom-color:var(--red)}
+
+/* ---------- layout ---------- */
+main{max-width:1160px;margin:0 auto;padding:22px 24px 80px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.search{flex:1;min-width:200px;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.toolbar select{padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px;font-size:13px;font-weight:500;color:var(--muted)}
+.chip .n{font-family:var(--mono);font-size:11.5px;margin-left:5px}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip:hover:not(.on){border-color:var(--muted)}
+.chip.some{border-color:var(--red);color:var(--ink)}
+.chip.zero{opacity:.38}
+.sel-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sel-count{font-size:13.5px;color:var(--muted)}
+.sel-count b{color:var(--ink);font-family:var(--mono)}
+.sel-actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.sel-list{margin-top:14px;border-top:1px solid var(--line);padding-top:8px;max-height:320px;overflow-y:auto}
+.sel-group{margin-bottom:8px}
+.sel-g-h{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:8px 0 3px}
+.sel-row{display:flex;gap:9px;align-items:center;padding:4px 4px;font-size:13px;cursor:pointer;border-radius:4px}
+.sel-row:hover{background:var(--paper)}
+.sel-row input{accent-color:var(--red)}
+.sel-row .sid{font-family:var(--mono);font-size:11.5px;color:var(--muted);flex:none}
+.sel-row .sstage{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;flex:none}
+
+/* ---------- idea rows ---------- */
+.row{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-bottom:10px;display:grid;grid-template-columns:110px 1fr 220px;gap:16px;align-items:center;cursor:pointer;transition:border-color .15s}
+.row:hover{border-color:var(--muted)}
+.row-id{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--muted)}
+.row-id .score{display:block;margin-top:6px;font-size:13px;font-weight:600;color:var(--ink)}
+.row-id .score.hi{color:var(--red)}
+.row-main .t{font-weight:600;font-size:15px}
+.row-main .m{font-size:12.5px;color:var(--muted);margin-top:3px}
+.badge{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:4px;border:1px solid var(--line);color:var(--muted);margin-top:6px}
+.badge.parked{color:var(--amber);border-color:var(--amber)}
+.badge.rejected{color:var(--muted);text-decoration:line-through}
+.badge.completed{color:var(--green);border-color:var(--green)}
+
+/* ---------- tracking strip (signature) ---------- */
+.strip{display:flex;align-items:center}
+.node{width:10px;height:10px;border-radius:50%;border:2px solid var(--line);background:var(--card);flex:none}
+.node.done{background:var(--ink);border-color:var(--ink)}
+.node.now{background:var(--red);border-color:var(--red);box-shadow:0 0 0 4px rgba(226,0,26,.14)}
+.seg{height:2px;flex:1;background:var(--line);min-width:8px}
+.seg.done{background:var(--ink)}
+.strip-lbl{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:7px;text-align:right}
+.strip-lbl b{color:var(--ink)}
+
+.empty{border:1.5px dashed var(--line);border-radius:8px;padding:48px 24px;text-align:center;color:var(--muted)}
+.empty b{display:block;color:var(--ink);margin-bottom:6px;font-size:16px}
+
+/* ---------- dashboard ---------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.card .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card .v{font-size:26px;font-weight:800;margin-top:6px}
+.card .v.green{color:var(--green)}
+.card .v.red{color:var(--red)}
+.card .s{font-size:12px;color:var(--muted);margin-top:2px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px;margin-bottom:16px}
+.panel h3{font-size:13px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:14px}
+.bar-row{display:grid;grid-template-columns:150px 1fr 44px;gap:10px;align-items:center;margin-bottom:8px;font-size:13px}
+.bar-row .lbl{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{background:var(--paper);border-radius:4px;height:14px;overflow:hidden}
+.bar-fill{height:100%;background:var(--ink);border-radius:4px}
+.bar-fill.red{background:var(--red)}
+.bar-row .num{font-family:var(--mono);font-size:12px;text-align:right}
+.mini-list li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--paper);font-size:13.5px;list-style:none}
+.mini-list li:last-child{border-bottom:none}
+.mini-list .sc{font-family:var(--mono);font-weight:600;color:var(--red)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:800px){.two-col{grid-template-columns:1fr}.row{grid-template-columns:1fr}.strip-lbl{text-align:left}}
+
+/* ---------- slide-over detail ---------- */
+.overlay{position:fixed;inset:0;background:rgba(20,24,28,.45);display:none;z-index:40}
+.overlay.on{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(680px,100%);background:var(--card);z-index:50;transform:translateX(102%);transition:transform .22s ease;display:flex;flex-direction:column;box-shadow:-8px 0 30px rgba(0,0,0,.15)}
+.drawer.on{transform:translateX(0)}
+@media(prefers-reduced-motion:reduce){.drawer{transition:none}}
+.waybill{background:var(--ink);color:#fff;padding:20px 26px 18px;position:relative}
+.waybill .wid{font-family:var(--mono);font-size:12px;color:#9AA7B2;letter-spacing:.1em}
+.waybill h2{font-size:19px;font-weight:700;margin:6px 0 10px;padding-right:40px}
+.waybill .meta{font-family:var(--mono);font-size:11.5px;color:#C7D0D8;display:flex;gap:18px;flex-wrap:wrap}
+.barcode{position:absolute;right:26px;top:20px;width:64px;height:30px;background:repeating-linear-gradient(90deg,#fff 0 2px,transparent 2px 5px,#fff 5px 6px,transparent 6px 10px);opacity:.8}
+.x-close{position:absolute;right:20px;bottom:14px;background:none;border:none;color:#9AA7B2;font-size:22px;line-height:1;padding:4px}
+.x-close:hover{color:#fff}
+.drawer-body{overflow-y:auto;flex:1;padding:20px 26px 40px}
+.d-strip{padding:16px 0 20px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.d-strip .labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+.sec{border-bottom:1px solid var(--line)}
+.sec-h{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;padding:15px 2px;font-weight:700;font-size:14px;text-align:left}
+.sec-h .arr{color:var(--muted);font-size:12px}
+.sec-b{display:none;padding:2px 2px 20px}
+.sec.open .sec-b{display:block}
+.f{margin-bottom:13px}
+.f label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.f input,.f select,.f textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff}
+.f textarea{min-height:74px;resize:vertical}
+.f .hint{font-size:12px;color:var(--muted);margin-top:4px}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:560px){.f-grid,.f-grid3{grid-template-columns:1fr}}
+.score-big{font-family:var(--mono);font-size:15px;margin-top:4px}
+.score-big b{font-size:22px;color:var(--red)}
+.stage-ctl{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:14px 0 6px}
+.stage-ctl .f{flex:1;min-width:180px;margin:0}
+.hist{margin-top:12px}
+.hist li{list-style:none;font-family:var(--mono);font-size:11.5px;color:var(--muted);padding:4px 0;border-bottom:1px dashed var(--paper)}
+.btn-line{background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:6px;padding:8px 14px;font-weight:600;font-size:13px}
+.btn-line:hover{border-color:var(--muted)}
+.btn-danger{color:var(--red);border-color:var(--red)}
+.btn-danger:hover{background:#FDEEF0}
+.btn-solid{background:var(--ink);color:#fff;border:none;border-radius:6px;padding:9px 16px;font-weight:600;font-size:13.5px}
+.btn-solid:hover{background:#2E353C}
+.btn-solid.red{background:var(--red)}
+.btn-solid.red:hover{background:var(--red-dark)}
+
+/* benefits table */
+.ben-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-bottom:10px}
+.ben-table th{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);text-align:left;padding:4px 6px;border-bottom:1px solid var(--line)}
+.ben-table td{padding:4px 3px;border-bottom:1px solid var(--paper);vertical-align:middle}
+.ben-table input{width:100%;padding:5px 6px;border:1px solid var(--line);border-radius:4px;font-size:12.5px}
+.ben-table input.num{font-family:var(--mono)}
+.ben-del{background:none;border:none;color:var(--muted);font-size:15px;padding:2px 6px}
+.ben-del:hover{color:var(--red)}
+.ben-tot{font-family:var(--mono);font-size:12.5px;margin-top:8px}
+.ben-tot b.g{color:var(--green)}
+.ben-tot b.r{color:var(--red)}
+
+/* modals */
+.modal-wrap{position:fixed;inset:0;background:rgba(20,24,28,.45);display:none;align-items:flex-start;justify-content:center;z-index:60;padding:40px 16px;overflow-y:auto}
+.modal-wrap.on{display:flex}
+.modal{background:var(--card);border-radius:10px;width:min(620px,100%);padding:24px 26px}
+.modal h2{font-size:17px;font-weight:800;margin-bottom:4px}
+.modal .sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+
+/* toast */
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 20px;border-radius:8px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:80}
+#toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd-top">
+    <div class="hd-mark" aria-hidden="true"></div>
+    <div>
+      <div class="hd-title">AI Idea Pipeline</div>
+      <div class="hd-sub">ACS Innovation · Ambassador Console <span style="display:inline-block;margin-left:6px;padding:1px 8px;border:1px solid currentColor;border-radius:999px;font-size:11px;opacity:.7">Sample data</span></div>
+    </div>
+    <div class="hd-actions">
+      <button class="btn btn-red" onclick="openNewIdea()">+ New idea</button>
+      <button class="btn" onclick="openImportSub()">Import submission</button>
+      <button class="btn btn-ghost" onclick="generateReport()">Management report</button>
+      <button class="btn btn-ghost" onclick="exportData()">Export data</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('fileImport').click()">Import data</button>
+      <input type="file" id="fileImport" accept=".json" hidden onchange="importData(this)">
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab on" id="tabPipe" onclick="setView('pipe')">Pipeline</button>
+    <button class="tab" id="tabDash" onclick="setView('dash')">Dashboard</button>
+  </nav>
+</header>
+
+<main>
+  <!-- PIPELINE VIEW -->
+  <section id="viewPipe">
+    <div class="toolbar">
+      <input class="search" id="q" type="search" placeholder="Search title, problem, submitter…" oninput="render()">
+      <select id="fDept" onchange="render()"><option value="">All departments</option></select>
+      <select id="fSort" onchange="render()">
+        <option value="updated">Sort: last updated</option>
+        <option value="score">Sort: score</option>
+        <option value="created">Sort: date submitted</option>
+      </select>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div id="list"></div>
+  </section>
+
+  <!-- DASHBOARD VIEW -->
+  <section id="viewDash" hidden>
+    <div id="dashSel"></div>
+    <div class="cards" id="dashCards"></div>
+    <div class="two-col">
+      <div class="panel"><h3>Ideas by stage</h3><div id="byStage"></div></div>
+      <div class="panel"><h3>Ideas by department</h3><div id="byDept"></div></div>
+    </div>
+    <div class="two-col">
+      <div class="panel"><h3>Top scored — waiting for pilot capacity</h3><ul class="mini-list" id="topBacklog"></ul></div>
+      <div class="panel"><h3>Benefits — projected vs realized (€/yr)</h3><div id="benChart"></div>
+        <p style="font-size:12px;color:var(--muted);margin-top:10px">Realized = latest measured value per metric (6-month if available, otherwise 3-month). Treat as indicative — attribution is rarely 100% clean.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- DETAIL DRAWER -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer" aria-label="Idea detail"></aside>
+
+<!-- NEW IDEA MODAL -->
+<div class="modal-wrap" id="mNew">
+  <div class="modal">
+    <h2>New idea</h2>
+    <p class="sub">Registered manually by the AI Ambassador (e.g. received by email or in a meeting).</p>
+    <div class="f"><label for="niTitle">Title</label><input id="niTitle" placeholder="Short, plain-language name"></div>
+    <div class="f-grid">
+      <div class="f"><label for="niDept">Department</label><input id="niDept" list="deptList" placeholder="e.g. Operations"></div>
+      <div class="f"><label for="niSub">Submitter</label><input id="niSub" placeholder="Name"></div>
+    </div>
+    <div class="f"><label for="niProblem">Problem — what hurts today</label><textarea id="niProblem"></textarea></div>
+    <div class="f"><label for="niProposal">Proposed AI use (optional)</label><textarea id="niProposal"></textarea></div>
+    <div class="f-grid">
+      <div class="f"><label for="niData">Data available?</label>
+        <select id="niData"><option>Don't know</option><option>Yes</option><option>Partially</option><option>No</option></select></div>
+      <div class="f"><label for="niVol">Volume / frequency of the pain</label><input id="niVol" placeholder="e.g. ~200 cases/day"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-line" onclick="closeModal('mNew')">Cancel</button>
+      <button class="btn-solid red" onclick="saveNewIdea()">Register idea</button>
+    </div>
+  </div>
+</div>
+
+<!-- IMPORT SUBMISSION MODAL -->
+<div class="modal-wrap" id="mSub">
+  <div class="modal">
+    <h2>Import submission</h2>
+    <p class="sub">Paste the submission code a colleague generated with the idea submission form and sent you by email.</p>
+    <div class="f"><label for="subPaste">Submission code</label><textarea id="subPaste" style="min-height:120px;font-family:var(--mono);font-size:12px" placeholder='{"v":1,"title":"…"} or the ACSAI1| code'></textarea></div>
+    <div class="modal-actions">
+      <button class="btn-line" onclick="closeModal('mSub')">Cancel</button>
+      <button class="btn-solid red" onclick="importSubmission()">Import</button>
+    </div>
+  </div>
+</div>
+
+<datalist id="deptList"></datalist>
+<div id="toast" role="status"></div>
+
+<script>
+'use strict';
+/* ================= data ================= */
+const KEY='acs-ai-pipeline-demo';
+const STAGES=['Submitted','Screening','Evaluation','Pilot','Implementation','Measuring','Completed'];
+const OFF=['Parked','Rejected'];
+const ALL_STAGES=STAGES.concat(OFF);
+const WEIGHTS={value:.35,feasibility:.25,risk:.20,effort:.20}; // risk & effort inverted
+
+let state=load();
+let filterStage='';   // '' = all active
+let openId=null;
+
+function seedState(){
+  var H=function(s,d,n){return {stage:s,date:d,note:n};};
+  return {counter:8, ideas:[
+    {id:'AI-2025-001',title:'Damaged parcel auto-flagging',dept:'Operations',submitter:'Sorting hub lead',problem:'Damage is noticed too late, after parcels have moved down the line.',proposal:'A camera and vision model at the belt flags likely damage and routes the parcel for a manual check.',dataAvail:'Yes',volume:'',stage:'Implementation',createdAt:'2025-02-10',updatedAt:'2025-11-18',history:[H('Submitted','2025-02-10','Registered'),H('Pilot','2025-06-05','Pilot at one hub'),H('Implementation','2025-11-18','Rolling out')],screening:{decision:'Go',reason:'Clear operational value',slaDate:''},scores:{value:5,feasibility:4,risk:2,effort:3},pilot:{criteria:'Detection precision usable in production',baseline:'Manual spot checks',start:'2025-06-05',end:'2025-10-01',outcome:'Met'},approvals:[],benefits:[],notes:''},
+    {id:'AI-2025-002',title:'Delivery status assistant',dept:'Customer Service',submitter:'Contact centre lead',problem:'Agents spend most calls answering "where is my parcel".',proposal:'An assistant that answers delivery-status questions from tracking data, with handoff to a human when needed.',dataAvail:'Yes',volume:'',stage:'Pilot',createdAt:'2025-04-01',updatedAt:'2025-10-12',history:[H('Submitted','2025-04-01','Registered'),H('Evaluation','2025-07-20','Scored'),H('Pilot','2025-10-12','Pilot with one team')],screening:{decision:'Go',reason:'High call deflection potential',slaDate:''},scores:{value:4,feasibility:4,risk:3,effort:3},pilot:{criteria:'Deflection rate and CSAT',baseline:'',start:'2025-10-12',end:'',outcome:''},approvals:[],benefits:[],notes:''},
+    {id:'AI-2025-003',title:'Route time anomaly alerts',dept:'Network Planning',submitter:'Dispatch supervisor',problem:'Abnormally slow routes are only visible in weekly reports.',proposal:'Detect routes deviating from expected time and alert dispatch the same day.',dataAvail:'Partial',volume:'',stage:'Evaluation',createdAt:'2025-05-15',updatedAt:'2025-09-30',history:[H('Submitted','2025-05-15','Registered'),H('Screening','2025-06-10','Passed'),H('Evaluation','2025-09-30','Scored')],screening:{decision:'Go',reason:'Feasible with existing data',slaDate:''},scores:{value:4,feasibility:3,risk:2,effort:3},pilot:{criteria:'',baseline:'',start:'',end:'',outcome:''},approvals:[],benefits:[],notes:''},
+    {id:'AI-2025-004',title:'Address cleanup model',dept:'IT / Data',submitter:'Data team',problem:'Messy free-text addresses cause failed first deliveries.',proposal:'A model that normalizes and geocodes addresses at intake.',dataAvail:'Yes',volume:'',stage:'Measuring',createdAt:'2025-01-20',updatedAt:'2025-12-01',history:[H('Submitted','2025-01-20','Registered'),H('Pilot','2025-05-01','Pilot'),H('Implementation','2025-09-01','Live'),H('Measuring','2025-12-01','Measuring impact')],screening:{decision:'Go',reason:'Strong first-attempt-delivery impact',slaDate:''},scores:{value:5,feasibility:4,risk:2,effort:2},pilot:{criteria:'First-attempt delivery rate',baseline:'',start:'2025-05-01',end:'2025-08-01',outcome:'Met'},approvals:[],benefits:[],notes:''},
+    {id:'AI-2025-005',title:'Returns volume forecast',dept:'Commercial',submitter:'Key account manager',problem:'Return spikes after campaigns are hard to staff for.',proposal:'Forecast return volumes per client and period.',dataAvail:'Partial',volume:'',stage:'Screening',createdAt:'2025-08-05',updatedAt:'2025-08-20',history:[H('Submitted','2025-08-05','Registered'),H('Screening','2025-08-20','Under review')],screening:{decision:'',reason:'',slaDate:'2025-09-15'},scores:{value:'',feasibility:'',risk:'',effort:''},pilot:{criteria:'',baseline:'',start:'',end:'',outcome:''},approvals:[],benefits:[],notes:''},
+    {id:'AI-2025-006',title:'Locker demand predictor',dept:'Innovation',submitter:'Innovation dept.',problem:'Locker placement and restocking are largely guesswork.',proposal:'Predict locker utilization by area and time of day.',dataAvail:"Don't know",volume:'',stage:'Submitted',createdAt:'2025-11-28',updatedAt:'2025-11-28',history:[H('Submitted','2025-11-28','Registered')],screening:{decision:'',reason:'',slaDate:''},scores:{value:'',feasibility:'',risk:'',effort:''},pilot:{criteria:'',baseline:'',start:'',end:'',outcome:''},approvals:[],benefits:[],notes:''},
+    {id:'AI-2024-007',title:'Supplier invoice extraction',dept:'Finance',submitter:'AP team',problem:'Manual keying of supplier invoices is slow and error-prone.',proposal:'Extract invoice fields automatically for human review.',dataAvail:'Yes',volume:'',stage:'Completed',createdAt:'2024-09-10',updatedAt:'2025-07-01',history:[H('Submitted','2024-09-10','Registered'),H('Pilot','2024-12-01','Pilot'),H('Implementation','2025-03-01','Live'),H('Completed','2025-07-01','Closed, benefits confirmed')],screening:{decision:'Go',reason:'Fast payback',slaDate:''},scores:{value:4,feasibility:5,risk:2,effort:2},pilot:{criteria:'Keying time per invoice',baseline:'',start:'2024-12-01',end:'2025-02-01',outcome:'Met'},approvals:[],benefits:[],notes:''},
+    {id:'AI-2025-008',title:'Voice sorting assistant',dept:'Operations',submitter:'Hub operations',problem:'Hands-free confirmations could speed manual sorting stations.',proposal:'Voice prompts and confirmations at manual sorting.',dataAvail:'No',volume:'',stage:'Parked',createdAt:'2025-03-22',updatedAt:'2025-06-18',history:[H('Submitted','2025-03-22','Registered'),H('Evaluation','2025-05-10','Scored'),H('Parked','2025-06-18','Parked')],screening:{decision:'',reason:'',slaDate:''},scores:{value:3,feasibility:2,risk:3,effort:4},pilot:{criteria:'',baseline:'',start:'',end:'',outcome:''},approvals:[],benefits:[],notes:'Parked: hub noise makes speech recognition unreliable for now.'}
+  ]};
+}
+function load(){
+  try{
+    const raw=localStorage.getItem(KEY);
+    if(raw){const s=JSON.parse(raw); if(s&&Array.isArray(s.ideas))return s;}
+  }catch(e){console.warn('load failed',e);}
+  return seedState();
+}
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(state));}
+  catch(e){toast('Could not save to browser storage');}
+}
+function nextId(){
+  state.counter++;
+  return 'AI-'+new Date().getFullYear()+'-'+String(state.counter).padStart(3,'0');
+}
+function today(){return new Date().toISOString().slice(0,10);}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function num(v){const n=parseFloat(v);return isNaN(n)?null:n;}
+function eur(n){return '€'+Math.round(n).toLocaleString('en-US');}
+
+function blankIdea(o){
+  return Object.assign({
+    id:nextId(),title:'',dept:'',submitter:'',problem:'',proposal:'',
+    dataAvail:"Don't know",volume:'',
+    stage:'Submitted',createdAt:today(),updatedAt:today(),
+    history:[{stage:'Submitted',date:today(),note:'Registered'}],
+    screening:{decision:'',reason:'',slaDate:''},
+    scores:{value:'',feasibility:'',risk:'',effort:''},
+    pilot:{criteria:'',baseline:'',start:'',end:'',outcome:''},
+    approvals:[],benefits:[],notes:''
+  },o||{});
+}
+
+function weightedScore(sc){
+  const v=num(sc.value),f=num(sc.feasibility),r=num(sc.risk),e=num(sc.effort);
+  if(v==null||f==null||r==null||e==null)return null;
+  return v*WEIGHTS.value+f*WEIGHTS.feasibility+(6-r)*WEIGHTS.risk+(6-e)*WEIGHTS.effort;
+}
+function benefitTotals(idea){
+  let proj=0,real=0,anyProj=false,anyReal=false;
+  (idea.benefits||[]).forEach(b=>{
+    const rate=num(b.eurPerUnit);if(rate==null)return;
+    const p=num(b.projected);if(p!=null){proj+=p*rate;anyProj=true;}
+    const rv=num(b.real6)!=null?num(b.real6):num(b.real3);
+    if(rv!=null){real+=rv*rate;anyReal=true;}
+  });
+  return {proj:anyProj?proj:null,real:anyReal?real:null};
+}
+function findIdea(id){return state.ideas.find(i=>i.id===id);}
+function touch(idea){idea.updatedAt=today();save();}
+
+/* ================= views ================= */
+function setView(v){
+  document.getElementById('viewPipe').hidden=v!=='pipe';
+  document.getElementById('viewDash').hidden=v!=='dash';
+  document.getElementById('tabPipe').classList.toggle('on',v==='pipe');
+  document.getElementById('tabDash').classList.toggle('on',v==='dash');
+  if(v==='dash')renderDash();
+}
+
+function render(){
+  renderChips();renderDeptFilter();renderList();
+}
+
+function renderChips(){
+  const counts={};ALL_STAGES.forEach(s=>counts[s]=0);
+  state.ideas.forEach(i=>counts[i.stage]=(counts[i.stage]||0)+1);
+  const active=state.ideas.filter(i=>!OFF.includes(i.stage)).length;
+  let html=chip('','All active',active);
+  ALL_STAGES.forEach(s=>{if(counts[s]>0||STAGES.includes(s))html+=chip(s,s,counts[s]);});
+  document.getElementById('chips').innerHTML=html;
+}
+function chip(val,label,n){
+  const on=filterStage===val?' on':'';
+  return `<button class="chip${on}" onclick="filterStage='${val}';render()">${label}<span class="n">${n}</span></button>`;
+}
+
+function renderDeptFilter(){
+  const sel=document.getElementById('fDept');
+  const cur=sel.value;
+  const depts=[...new Set(state.ideas.map(i=>i.dept).filter(Boolean))].sort();
+  sel.innerHTML='<option value="">All departments</option>'+depts.map(d=>`<option${d===cur?' selected':''}>${esc(d)}</option>`).join('');
+  document.getElementById('deptList').innerHTML=depts.map(d=>`<option value="${esc(d)}">`).join('');
+}
+
+function renderList(){
+  const q=document.getElementById('q').value.toLowerCase();
+  const dept=document.getElementById('fDept').value;
+  const sort=document.getElementById('fSort').value;
+  let items=state.ideas.filter(i=>{
+    if(filterStage===''){if(OFF.includes(i.stage))return false;}
+    else if(i.stage!==filterStage)return false;
+    if(dept&&i.dept!==dept)return false;
+    if(q){const hay=(i.title+' '+i.problem+' '+i.submitter+' '+i.dept+' '+i.id).toLowerCase();if(!hay.includes(q))return false;}
+    return true;
+  });
+  items.sort((a,b)=>{
+    if(sort==='score')return (weightedScore(b.scores)||0)-(weightedScore(a.scores)||0);
+    if(sort==='created')return b.createdAt.localeCompare(a.createdAt);
+    return b.updatedAt.localeCompare(a.updatedAt);
+  });
+  const el=document.getElementById('list');
+  if(!items.length){
+    el.innerHTML=`<div class="empty"><b>No ideas here yet</b>${state.ideas.length?'Adjust the filters to see other stages.':'Register the first idea, or import a submission code from a colleague.'}</div>`;
+    return;
+  }
+  el.innerHTML=items.map(rowHtml).join('');
+}
+
+function rowHtml(i){
+  const ws=weightedScore(i.scores);
+  const scoreHtml=ws!=null?`<span class="score${ws>=3.8?' hi':''}">${ws.toFixed(2)}</span>`:'<span class="score" style="color:var(--line)">—</span>';
+  let stripHtml,lbl;
+  if(OFF.includes(i.stage)){
+    stripHtml=`<span class="badge ${i.stage.toLowerCase()}">${i.stage}</span>`;lbl='';
+  }else{
+    const idx=STAGES.indexOf(i.stage);
+    let s='<div class="strip">';
+    STAGES.forEach((st,k)=>{
+      s+=`<div class="node${k<idx?' done':k===idx?' now':''}" title="${st}"></div>`;
+      if(k<STAGES.length-1)s+=`<div class="seg${k<idx?' done':''}"></div>`;
+    });
+    s+='</div>';
+    stripHtml=s;lbl=`<div class="strip-lbl">Scan point <b>${idx+1}/${STAGES.length}</b> · ${esc(i.stage)}</div>`;
+  }
+  return `<article class="row" onclick="openDrawer('${i.id}')">
+    <div class="row-id">${esc(i.id)}${scoreHtml}</div>
+    <div class="row-main"><div class="t">${esc(i.title)||'(untitled)'}</div>
+      <div class="m">${esc(i.dept)||'No department'} · ${esc(i.submitter)||'Unknown submitter'} · submitted ${esc(i.createdAt)}</div></div>
+    <div>${stripHtml}${lbl}</div>
+  </article>`;
+}
+
+/* ================= dashboard ================= */
+/* ---- faceted AND filter: result = (stage filter) ∩ (department filter) ----
+   selStages / selDepts empty within a facet = no constraint from that facet.
+   Empty STAGE facet defaults to active stages only (Parked & Rejected excluded).
+   selExclude = individual matched projects the user unticked. ---- */
+let selStages=new Set();
+let selDepts=new Set();
+let selExclude=new Set();
+let dashListOpen=false;
+let dashStageKeys=[];
+let dashDeptKeys=[];
+
+function stageOK(i){return selStages.size?selStages.has(i.stage):!OFF.includes(i.stage);}
+function deptOK(i){return selDepts.size?selDepts.has(i.dept||'(none)'):true;}
+function dashCandidates(){return state.ideas.filter(i=>stageOK(i)&&deptOK(i));}
+function dashIdeas(){return dashCandidates().filter(i=>!selExclude.has(i.id));}
+function isDefaultFilter(){return selStages.size===0&&selDepts.size===0&&selExclude.size===0;}
+
+function toggleStageFacet(s){if(selStages.has(s))selStages.delete(s);else selStages.add(s);renderDash();}
+function toggleDeptFacet(d){if(selDepts.has(d))selDepts.delete(d);else selDepts.add(d);renderDash();}
+function toggleStageIdx(k){const s=dashStageKeys[k];if(s!=null)toggleStageFacet(s);}
+function toggleDeptIdx(k){const d=dashDeptKeys[k];if(d!=null)toggleDeptFacet(d);}
+function toggleExclude(id){if(selExclude.has(id))selExclude.delete(id);else selExclude.add(id);renderDash();}
+function clearFilters(){selStages=new Set();selDepts=new Set();selExclude=new Set();renderDash();}
+function toggleDashList(){dashListOpen=!dashListOpen;renderDash();}
+
+function dashSelHtml(){
+  const total=state.ideas.length;
+  const cand=dashCandidates();
+  const shown=dashIdeas();
+  /* stage chips — count shows how many match given the CURRENT department filter */
+  dashStageKeys=ALL_STAGES.filter(s=>state.ideas.some(i=>i.stage===s));
+  const stageChips=dashStageKeys.map((s,k)=>{
+    const c=state.ideas.filter(i=>i.stage===s&&deptOK(i)).length;
+    const on=selStages.has(s);
+    const cls=on?' on':(c===0?' zero':'');
+    return `<button class="chip${cls}" onclick="toggleStageIdx(${k})" title="${on?'Remove':'Add'} this stage to the filter">${s}<span class="n">${c}</span></button>`;
+  }).join('');
+  /* dept chips — count shows how many match given the CURRENT stage filter */
+  dashDeptKeys=[...new Set(state.ideas.map(i=>i.dept||'(none)'))].sort();
+  const deptChips=dashDeptKeys.map((d,k)=>{
+    const c=state.ideas.filter(i=>(i.dept||'(none)')===d&&stageOK(i)).length;
+    const on=selDepts.has(d);
+    const cls=on?' on':(c===0?' zero':'');
+    return `<button class="chip${cls}" onclick="toggleDeptIdx(${k})" title="${on?'Remove':'Add'} this department to the filter">${esc(d)}<span class="n">${c}</span></button>`;
+  }).join('');
+  /* matched preview (checkboxes let you drop specific matches) */
+  let list='';
+  if(dashListOpen){
+    list=cand.length
+      ? '<div class="sel-list">'+cand.map(i=>`<label class="sel-row"><input type="checkbox"${selExclude.has(i.id)?'':' checked'} onchange="toggleExclude('${i.id}')"><span class="sid">${esc(i.id)}</span><span>${esc(i.title)||'(untitled)'}</span><span class="sstage">${esc(i.dept)||'(none)'} · ${esc(i.stage)}</span></label>`).join('')+'</div>'
+      : '<div class="sel-list" style="padding:14px;color:var(--muted);font-size:13px">No projects match all the selected criteria.</div>';
+  }
+  const countLine=shown.length
+    ? `<b>${shown.length}</b> project${shown.length===1?'':'s'} match the current filter`
+    : `<b style="color:var(--red)">0</b> projects match all the selected criteria`;
+  const defNote=(selStages.size===0)?' <span style="font-weight:400">(no stage filter → active stages only; Parked &amp; Rejected excluded)</span>':'';
+  const exNote=selExclude.size?` · <span style="color:var(--muted)">${cand.filter(i=>selExclude.has(i.id)).length} manually dropped</span>`:'';
+  return `<div class="panel" style="padding:14px 18px">
+    <div class="sel-head">
+      <span class="sel-count">${countLine}${defNote}${exNote}</span>
+      <div class="sel-actions">
+        <button class="btn-line" onclick="clearFilters()">Clear filter</button>
+        <button class="btn-line" onclick="toggleDashList()">${dashListOpen?'Hide matched ▲':'Show matched ▼'}</button>
+        <button class="btn-line" onclick="generateReport()" title="Export a management report of the matched projects">Export report ▸</button>
+      </div>
+    </div>
+    <div class="sel-g-h" style="margin-top:12px">Stage <span style="text-transform:none;letter-spacing:0;color:var(--muted)">— match any selected</span></div>
+    <div class="chips" style="margin:0">${stageChips||'<span style="font-size:13px;color:var(--muted)">No ideas registered yet.</span>'}</div>
+    <div class="sel-g-h" style="margin-top:8px">Department <span style="text-transform:none;letter-spacing:0;color:var(--muted)">— match any selected</span></div>
+    <div class="chips" style="margin:0">${deptChips}</div>
+    <p style="font-size:12px;color:var(--muted);margin-top:12px">Report includes only projects that match <b>the stage filter AND the department filter</b> — the overlap. A chip showing <b>0</b> would produce an empty result in the current combination. Leave a facet empty for no constraint.</p>
+    ${list}</div>`;
+}
+
+function renderDash(){
+  document.getElementById('dashSel').innerHTML=dashSelHtml();
+  const ideas=dashIdeas();
+  const active=ideas.filter(i=>!OFF.includes(i.stage)&&i.stage!=='Completed');
+  const pilots=ideas.filter(i=>i.stage==='Pilot').length;
+  const done=ideas.filter(i=>i.stage==='Completed').length;
+  let proj=0,real=0;
+  ideas.forEach(i=>{const t=benefitTotals(i);if(t.proj)proj+=t.proj;if(t.real)real+=t.real;});
+  document.getElementById('dashCards').innerHTML=
+    card('Total ideas',ideas.length)+
+    card('Active in pipeline',active.length)+
+    card('Pilots running',pilots)+
+    card('Implemented / completed',done)+
+    card('Projected benefit',proj?eur(proj)+'<span class="s">/yr, sum of active projections</span>':'—','red')+
+    card('Realized benefit',real?eur(real)+'<span class="s">/yr, measured</span>':'—','green');
+  barChart('byStage',ALL_STAGES.map(s=>[s,ideas.filter(i=>i.stage===s).length]).filter(x=>x[1]>0),false);
+  const depts={};ideas.forEach(i=>{const d=i.dept||'(none)';depts[d]=(depts[d]||0)+1;});
+  barChart('byDept',Object.entries(depts).sort((a,b)=>b[1]-a[1]),true);
+  // top backlog: scored, still before pilot
+  const backlog=ideas.filter(i=>['Screening','Evaluation'].includes(i.stage)&&weightedScore(i.scores)!=null)
+    .sort((a,b)=>weightedScore(b.scores)-weightedScore(a.scores)).slice(0,6);
+  document.getElementById('topBacklog').innerHTML=backlog.length
+    ? backlog.map(i=>`<li><span>${esc(i.id)} · ${esc(i.title)}</span><span class="sc">${weightedScore(i.scores).toFixed(2)}</span></li>`).join('')
+    : '<li style="color:var(--muted)">No scored ideas waiting.</li>';
+  // benefits chart
+  const rows=ideas.map(i=>({i,t:benefitTotals(i)})).filter(x=>x.t.proj||x.t.real);
+  const mx=Math.max(1,...rows.flatMap(x=>[x.t.proj||0,x.t.real||0]));
+  document.getElementById('benChart').innerHTML=rows.length?rows.map(x=>`
+    <div style="margin-bottom:12px">
+      <div style="font-size:12.5px;margin-bottom:4px">${esc(x.i.id)} · ${esc(x.i.title)}</div>
+      <div class="bar-row" style="grid-template-columns:70px 1fr 90px;margin-bottom:3px">
+        <span class="lbl">Projected</span><div class="bar-track"><div class="bar-fill red" style="width:${(x.t.proj||0)/mx*100}%"></div></div><span class="num">${x.t.proj?eur(x.t.proj):'—'}</span></div>
+      <div class="bar-row" style="grid-template-columns:70px 1fr 90px">
+        <span class="lbl">Realized</span><div class="bar-track"><div class="bar-fill" style="width:${(x.t.real||0)/mx*100}%;background:var(--green)"></div></div><span class="num">${x.t.real?eur(x.t.real):'—'}</span></div>
+    </div>`).join('')
+    : '<p style="color:var(--muted);font-size:13px">No benefit metrics with a €/unit rate yet. Add them in an idea\'s Benefits section.</p>';
+}
+function card(k,v,cls){return `<div class="card"><div class="k">${k}</div><div class="v ${cls||''}">${v}</div></div>`;}
+function barChart(elId,pairs,red){
+  const mx=Math.max(1,...pairs.map(p=>p[1]));
+  document.getElementById(elId).innerHTML=pairs.length?pairs.map(p=>
+    `<div class="bar-row"><span class="lbl">${esc(p[0])}</span><div class="bar-track"><div class="bar-fill${red?' red':''}" style="width:${p[1]/mx*100}%"></div></div><span class="num">${p[1]}</span></div>`).join('')
+    :'<p style="color:var(--muted);font-size:13px">No data yet.</p>';
+}
+
+/* ================= drawer ================= */
+function openDrawer(id){
+  openId=id;renderDrawer();
+  const b=document.querySelector('#drawer .drawer-body');
+  if(b)b.scrollTop=0;
+  document.getElementById('overlay').classList.add('on');
+  document.getElementById('drawer').classList.add('on');
+}
+function closeDrawer(){
+  openId=null;
+  document.getElementById('overlay').classList.remove('on');
+  document.getElementById('drawer').classList.remove('on');
+  render();
+}
+const OPEN_SECS={details:true,stage:true};
+function toggleSec(k){OPEN_SECS[k]=!OPEN_SECS[k];renderDrawer();}
+
+function renderDrawer(){
+  const i=findIdea(openId);if(!i)return;
+  const prevBody=document.querySelector('#drawer .drawer-body');
+  const scrollPos=prevBody?prevBody.scrollTop:0;
+  const ws=weightedScore(i.scores);
+  const t=benefitTotals(i);
+  const stageOpts=ALL_STAGES.map(s=>`<option${s===i.stage?' selected':''}>${s}</option>`).join('');
+  const idx=STAGES.indexOf(i.stage);
+  let strip='<div class="strip">';
+  STAGES.forEach((st,k)=>{
+    strip+=`<div class="node${idx>=0&&k<idx?' done':k===idx?' now':''}"></div>`;
+    if(k<STAGES.length-1)strip+=`<div class="seg${idx>=0&&k<idx?' done':''}"></div>`;
+  });
+  strip+='</div><div class="labels">'+STAGES.map(s=>`<span>${s.slice(0,4)}</span>`).join('')+'</div>';
+
+  document.getElementById('drawer').innerHTML=`
+  <div class="waybill">
+    <div class="barcode" aria-hidden="true"></div>
+    <div class="wid">${esc(i.id)}</div>
+    <h2>${esc(i.title)||'(untitled)'}</h2>
+    <div class="meta"><span>DEPT ${esc(i.dept)||'—'}</span><span>FROM ${esc(i.submitter)||'—'}</span><span>REG ${esc(i.createdAt)}</span><span>UPD ${esc(i.updatedAt)}</span></div>
+    <button class="x-close" onclick="closeDrawer()" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-body">
+    <div class="d-strip">${OFF.includes(i.stage)?`<span class="badge ${i.stage.toLowerCase()}" style="font-size:12px">${i.stage}</span>`:strip}</div>
+
+    ${sec('stage','Stage & history',`
+      <div class="stage-ctl">
+        <div class="f"><label>Current stage</label><select id="dStage">${stageOpts}</select></div>
+        <div class="f"><label>Note (optional)</label><input id="dStageNote" placeholder="Why it moved"></div>
+        <button class="btn-solid red" onclick="moveStage()">Update stage</button>
+      </div>
+      <ul class="hist">${(i.history||[]).slice().reverse().map(h=>`<li>${esc(h.date)} → ${esc(h.stage)}${h.note?' · '+esc(h.note):''}</li>`).join('')}</ul>
+    `)}
+
+    ${sec('details','Details',`
+      ${fld(i,'title','Title','input')}
+      <div class="f-grid">${fld(i,'dept','Department','input')}${fld(i,'submitter','Submitter','input')}</div>
+      ${fld(i,'problem','Problem','textarea')}
+      ${fld(i,'proposal','Proposed AI use','textarea')}
+      <div class="f-grid">
+        <div class="f"><label>Data available?</label><select onchange="setField('dataAvail',this.value)">
+          ${["Don't know",'Yes','Partially','No'].map(o=>`<option${o===i.dataAvail?' selected':''}>${o}</option>`).join('')}</select></div>
+        ${fld(i,'volume','Volume / frequency','input')}
+      </div>
+    `)}
+
+    ${sec('screening','Gate 1 — Screening',`
+      <div class="f-grid3">
+        <div class="f"><label>Decision</label><select onchange="setSub('screening','decision',this.value)">
+          ${['','Advance','Reject','Park'].map(o=>`<option${o===i.screening.decision?' selected':''}>${o||'—'}</option>`).join('')}</select></div>
+        <div class="f"><label>SLA date</label><input type="date" value="${esc(i.screening.slaDate)}" onchange="setSub('screening','slaDate',this.value)"></div>
+        <div></div>
+      </div>
+      <div class="f"><label>Reason (goes back to the submitter)</label><textarea oninput="setSub('screening','reason',this.value)">${esc(i.screening.reason)}</textarea></div>
+    `)}
+
+    ${sec('scoring','Gate 2 — Scoring',`
+      <div class="f-grid">
+        ${scoreSel(i,'value','Value (1 low – 5 high)')}
+        ${scoreSel(i,'feasibility','Feasibility (1 low – 5 high)')}
+        ${scoreSel(i,'risk','Risk (1 low – 5 high, inverted)')}
+        ${scoreSel(i,'effort','Effort (1 low – 5 high, inverted)')}
+      </div>
+      <div class="score-big">Weighted score: <b>${ws!=null?ws.toFixed(2):'—'}</b> / 5
+        <div class="hint" style="font-family:var(--sans)">Weights: value 35% · feasibility 25% · risk 20% · effort 20% (risk & effort count against).</div></div>
+    `)}
+
+    ${sec('pilot','Gate 3 — Pilot',`
+      <div class="f"><label>Success criteria — set BEFORE the pilot starts</label><textarea oninput="setSub('pilot','criteria',this.value)">${esc(i.pilot.criteria)}</textarea></div>
+      <div class="f"><label>Baseline measurement of current process</label><textarea oninput="setSub('pilot','baseline',this.value)">${esc(i.pilot.baseline)}</textarea>
+        <div class="hint">No baseline, no pilot. This is what makes the benefit measurable later.</div></div>
+      <div class="f-grid3">
+        <div class="f"><label>Start</label><input type="date" value="${esc(i.pilot.start)}" onchange="setSub('pilot','start',this.value)"></div>
+        <div class="f"><label>End (timebox)</label><input type="date" value="${esc(i.pilot.end)}" onchange="setSub('pilot','end',this.value)"></div>
+        <div class="f"><label>Outcome</label><select onchange="setSub('pilot','outcome',this.value)">
+          ${['','Pass','Fail','Inconclusive'].map(o=>`<option${o===i.pilot.outcome?' selected':''}>${o||'—'}</option>`).join('')}</select></div>
+      </div>
+    `)}
+
+    ${sec('approvals','Approvals & decisions',`
+      <p class="hint" style="margin-bottom:10px">Record of gate decisions taken by the evaluation committee / management. The tool documents decisions — it does not replace the meeting where they are taken.</p>
+      <table class="ben-table"><thead><tr><th style="width:25%">Gate</th><th style="width:15%">Decision</th><th>Approver(s)</th><th style="width:15%">Date</th><th>Note</th><th></th></tr></thead>
+      <tbody>${(i.approvals||[]).map((a,k)=>`<tr>
+        <td><select onchange="setApp(${k},'gate',this.value)" style="width:100%;padding:5px 4px;border:1px solid var(--line);border-radius:4px;font-size:12px">
+          ${['Gate 1 — Screening','Gate 2 — Evaluation','Gate 3 — Pilot go/no-go','Implementation go','Budget','Other'].map(o=>`<option${o===a.gate?' selected':''}>${o}</option>`).join('')}</select></td>
+        <td><select onchange="setApp(${k},'decision',this.value)" style="width:100%;padding:5px 4px;border:1px solid var(--line);border-radius:4px;font-size:12px">
+          ${['Approved','Rejected','Deferred','Conditional'].map(o=>`<option${o===a.decision?' selected':''}>${o}</option>`).join('')}</select></td>
+        <td><input value="${esc(a.approver)}" oninput="setApp(${k},'approver',this.value)" placeholder="Name(s)"></td>
+        <td><input type="date" value="${esc(a.date)}" onchange="setApp(${k},'date',this.value)"></td>
+        <td><input value="${esc(a.note)}" oninput="setApp(${k},'note',this.value)"></td>
+        <td><button class="ben-del" onclick="delApp(${k})" aria-label="Remove decision">✕</button></td></tr>`).join('')}</tbody></table>
+      <button class="btn-line" onclick="addApp()">+ Record decision</button>
+    `)}
+
+    ${sec('benefits','Benefits measurement',`
+      <p class="hint" style="margin-bottom:10px">Enter each metric as an <b>improvement vs the baseline</b>, per year (e.g. hours saved/yr). €/unit converts it to money. Realized values: measure at ~3 and ~6 months after go-live, annualized.</p>
+      <table class="ben-table"><thead><tr><th style="width:24%">Metric</th><th style="width:12%">Unit</th><th>Projected</th><th>Real 3m</th><th>Real 6m</th><th>€/unit</th><th></th></tr></thead>
+      <tbody>${(i.benefits||[]).map((b,k)=>`<tr>
+        <td><input value="${esc(b.name)}" oninput="setBen(${k},'name',this.value)"></td>
+        <td><input value="${esc(b.unit)}" oninput="setBen(${k},'unit',this.value)"></td>
+        <td><input class="num" value="${esc(b.projected)}" oninput="setBen(${k},'projected',this.value)"></td>
+        <td><input class="num" value="${esc(b.real3)}" oninput="setBen(${k},'real3',this.value)"></td>
+        <td><input class="num" value="${esc(b.real6)}" oninput="setBen(${k},'real6',this.value)"></td>
+        <td><input class="num" value="${esc(b.eurPerUnit)}" oninput="setBen(${k},'eurPerUnit',this.value)"></td>
+        <td><button class="ben-del" onclick="delBen(${k})" aria-label="Remove metric">✕</button></td></tr>`).join('')}</tbody></table>
+      <button class="btn-line" onclick="addBen()">+ Add metric</button>
+      <div class="ben-tot" id="benTot">Projected: <b class="r">${t.proj?eur(t.proj):'—'}</b>/yr · Realized: <b class="g">${t.real?eur(t.real):'—'}</b>/yr</div>
+    `)}
+
+    ${sec('notes','Notes',`
+      <div class="f"><textarea style="min-height:100px" oninput="setField('notes',this.value)">${esc(i.notes)}</textarea></div>
+      <button class="btn-line btn-danger" onclick="deleteIdea()">Delete idea</button>
+    `)}
+  </div>`;
+  const newBody=document.querySelector('#drawer .drawer-body');
+  if(newBody)newBody.scrollTop=scrollPos;
+}
+function sec(key,title,body){
+  return `<div class="sec${OPEN_SECS[key]?' open':''}">
+    <button class="sec-h" onclick="toggleSec('${key}')"><span>${title}</span><span class="arr">${OPEN_SECS[key]?'▲':'▼'}</span></button>
+    <div class="sec-b">${body}</div></div>`;
+}
+function fld(i,key,label,kind){
+  if(kind==='textarea')return `<div class="f"><label>${label}</label><textarea oninput="setField('${key}',this.value)">${esc(i[key])}</textarea></div>`;
+  return `<div class="f"><label>${label}</label><input value="${esc(i[key])}" oninput="setField('${key}',this.value)"></div>`;
+}
+function scoreSel(i,key,label){
+  const opts=['','1','2','3','4','5'].map(o=>`<option${o===String(i.scores[key])?' selected':''}>${o||'—'}</option>`).join('');
+  return `<div class="f"><label>${label}</label><select onchange="setScore('${key}',this.value)">${opts}</select></div>`;
+}
+
+/* field setters (drawer) */
+function setField(k,v){const i=findIdea(openId);if(!i)return;i[k]=v;touch(i);}
+function setSub(g,k,v){const i=findIdea(openId);if(!i)return;i[g][k]=v;touch(i);}
+function setScore(k,v){const i=findIdea(openId);if(!i)return;i.scores[k]=v;touch(i);renderDrawer();}
+function setBen(k,f,v){
+  const i=findIdea(openId);if(!i)return;
+  i.benefits[k][f]=v;touch(i);
+  const t=benefitTotals(i);
+  const el=document.getElementById('benTot');
+  if(el)el.innerHTML='Projected: <b class="r">'+(t.proj?eur(t.proj):'—')+'</b>/yr · Realized: <b class="g">'+(t.real?eur(t.real):'—')+'</b>/yr';
+}
+function addBen(){const i=findIdea(openId);if(!i)return;i.benefits.push({name:'',unit:'',projected:'',real3:'',real6:'',eurPerUnit:''});touch(i);renderDrawer();}
+function delBen(k){const i=findIdea(openId);if(!i)return;i.benefits.splice(k,1);touch(i);renderDrawer();}
+function setApp(k,f,v){const i=findIdea(openId);if(!i)return;i.approvals[k][f]=v;touch(i);}
+function addApp(){const i=findIdea(openId);if(!i)return;(i.approvals=i.approvals||[]).push({gate:'Gate 2 — Evaluation',decision:'Approved',approver:'',date:today(),note:''});touch(i);renderDrawer();}
+function delApp(k){const i=findIdea(openId);if(!i)return;i.approvals.splice(k,1);touch(i);renderDrawer();}
+function moveStage(){
+  const i=findIdea(openId);if(!i)return;
+  const s=document.getElementById('dStage').value;
+  const note=document.getElementById('dStageNote').value.trim();
+  if(s===i.stage&&!note){toast('Stage unchanged');return;}
+  i.stage=s;i.history.push({stage:s,date:today(),note});
+  touch(i);renderDrawer();toast('Moved to '+s);
+}
+function deleteIdea(){
+  const i=findIdea(openId);if(!i)return;
+  if(!confirm('Delete '+i.id+' — "'+i.title+'"? This cannot be undone.'))return;
+  state.ideas=state.ideas.filter(x=>x.id!==openId);
+  save();closeDrawer();toast('Idea deleted');
+}
+
+/* ================= new idea / import ================= */
+function openNewIdea(){document.getElementById('mNew').classList.add('on');document.getElementById('niTitle').focus();}
+function openImportSub(){document.getElementById('mSub').classList.add('on');document.getElementById('subPaste').focus();}
+function closeModal(id){document.getElementById(id).classList.remove('on');}
+function saveNewIdea(){
+  const g=id=>document.getElementById(id).value.trim();
+  if(!g('niTitle')){toast('Give the idea a title');return;}
+  const idea=blankIdea({title:g('niTitle'),dept:g('niDept'),submitter:g('niSub'),
+    problem:g('niProblem'),proposal:g('niProposal'),
+    dataAvail:document.getElementById('niData').value,volume:g('niVol')});
+  state.ideas.unshift(idea);save();
+  ['niTitle','niDept','niSub','niProblem','niProposal','niVol'].forEach(x=>document.getElementById(x).value='');
+  closeModal('mNew');render();toast('Registered '+idea.id);
+}
+function importSubmission(){
+  let raw=document.getElementById('subPaste').value.trim();
+  if(!raw){toast('Paste a submission code first');return;}
+  try{
+    if(raw.startsWith('ACSAI1|'))raw=decodeURIComponent(escape(atob(raw.slice(7))));
+    const o=JSON.parse(raw);
+    if(!o.title)throw new Error('missing title');
+    const idea=blankIdea({title:String(o.title),dept:String(o.dept||''),submitter:String(o.submitter||''),
+      problem:String(o.problem||''),proposal:String(o.proposal||''),
+      dataAvail:String(o.dataAvail||"Don't know"),volume:String(o.volume||'')});
+    if(o.date)idea.history[0].note='Submitted via form on '+String(o.date);
+    state.ideas.unshift(idea);save();
+    document.getElementById('subPaste').value='';
+    closeModal('mSub');render();toast('Imported '+idea.id);
+  }catch(e){toast('Could not read that code — check it was copied completely');}
+}
+
+/* ================= backup ================= */
+/* Reports the current faceted intersection (stage filter ∩ department filter). */
+function generateReport(){
+  const subset=dashIdeas();
+  if(!subset.length){
+    toast('No projects match all the selected criteria');
+    setView('dash');
+    return;
+  }
+  const stageArr=ALL_STAGES.filter(s=>selStages.has(s));
+  const deptArr=[...selDepts].sort();
+  let scopeTitle;
+  if(!stageArr.length&&!deptArr.length)scopeTitle='Active pipeline';
+  else scopeTitle=[stageArr.join('/'),deptArr.join(', ')].filter(Boolean).join(' · ');
+  const detail=['Stage filter: '+(stageArr.length?stageArr.join(', '):'any active'),
+    'Department filter: '+(deptArr.length?deptArr.join(', '):'any')];
+  const dropped=dashCandidates().filter(i=>selExclude.has(i.id)).length;
+  if(dropped)detail.push(dropped+' manually excluded');
+  const scopeDetail=detail.join(' · ')+' · matched by intersection (stage AND department)';
+  exportReport(subset,scopeTitle,scopeDetail);
+}
+function exportReport(subset,scopeTitle,scopeDetail){
+  const d=today();
+  const src=Array.isArray(subset)?subset:state.ideas;
+  const ideas=src.slice().sort((a,b)=>{
+    const sa=ALL_STAGES.indexOf(a.stage),sb=ALL_STAGES.indexOf(b.stage);
+    return sa-sb||(weightedScore(b.scores)||0)-(weightedScore(a.scores)||0);
+  });
+  const active=ideas.filter(i=>!OFF.includes(i.stage)&&i.stage!=='Completed');
+  const pilots=ideas.filter(i=>i.stage==='Pilot').length;
+  const done=ideas.filter(i=>i.stage==='Completed').length;
+  let proj=0,real=0;
+  ideas.forEach(i=>{
+    if(OFF.includes(i.stage))return; /* Parked & Rejected never count toward benefit totals */
+    const t=benefitTotals(i);if(t.proj)proj+=t.proj;if(t.real)real+=t.real;
+  });
+  const rows=ideas.map(i=>{
+    const ws=weightedScore(i.scores);const t=benefitTotals(i);
+    return '<tr><td class="mono">'+esc(i.id)+'</td><td>'+esc(i.title)+'</td><td>'+esc(i.dept)+'</td><td>'+esc(i.stage)+'</td><td class="mono">'+(ws!=null?ws.toFixed(2):'—')+'</td><td class="mono">'+(t.proj?eur(t.proj):'—')+'</td><td class="mono">'+(t.real?eur(t.real):'—')+'</td></tr>';
+  }).join('');
+  const decs=[];
+  ideas.forEach(i=>(i.approvals||[]).forEach(a=>decs.push(Object.assign({id:i.id,title:i.title},a))));
+  decs.sort((a,b)=>String(b.date).localeCompare(String(a.date)));
+  const decRows=decs.map(a=>'<tr><td class="mono">'+esc(a.date)+'</td><td class="mono">'+esc(a.id)+'</td><td>'+esc(a.title)+'</td><td>'+esc(a.gate)+'</td><td>'+esc(a.decision)+'</td><td>'+esc(a.approver)+'</td><td>'+esc(a.note)+'</td></tr>').join('');
+  const html='<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+    +'<title>AI Idea Pipeline — Management Report '+d+'</title>'
+    +'<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+PHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iIzFCMUYyNCIvPjxsaW5lIHgxPSI4IiB5MT0iMTYiIHgyPSIyNCIgeTI9IjE2IiBzdHJva2U9IiM1QjZCN0EiIHN0cm9rZS13aWR0aD0iMiIvPjxjaXJjbGUgY3g9IjkiIGN5PSIxNiIgcj0iNC4yIiBmaWxsPSIjRTIwMDFBIi8+PGNpcmNsZSBjeD0iMTciIGN5PSIxNiIgcj0iMyIgZmlsbD0iI0VFRjFGNCIvPjxjaXJjbGUgY3g9IjI0LjUiIGN5PSIxNiIgcj0iMi42IiBmaWxsPSJub25lIiBzdHJva2U9IiNFRUYxRjQiIHN0cm9rZS13aWR0aD0iMS44Ii8+PC9zdmc+">'
+    +'<style>'
+    +'body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#1B1F24;background:#EEF1F4;margin:0;padding:0 0 60px;font-size:14px;line-height:1.5}'
+    +'.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}'
+    +'header{background:#1B1F24;color:#fff;padding:26px 32px}'
+    +'header .mark{width:13px;height:13px;background:#E2001A;margin-bottom:12px}'
+    +'header h1{margin:0;font-size:20px}header p{margin:6px 0 0;color:#9AA7B2;font-size:13px}'
+    +'main{max-width:960px;margin:0 auto;padding:24px 24px 0}'
+    +'.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:24px}'
+    +'.card{background:#fff;border:1px solid #D8DEE4;border-radius:8px;padding:12px 14px}'
+    +'.card .k{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#5B6B7A}'
+    +'.card .v{font-size:21px;font-weight:800;margin-top:4px}.v.red{color:#E2001A}.v.green{color:#1E7F4F}'
+    +'h2{font-size:14px;text-transform:uppercase;letter-spacing:.04em;margin:26px 0 10px}'
+    +'table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #D8DEE4;border-radius:8px;overflow:hidden;font-size:13px}'
+    +'th{background:#1B1F24;color:#fff;text-align:left;padding:8px 10px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase}'
+    +'td{padding:7px 10px;border-bottom:1px solid #EEF1F4;vertical-align:top}'
+    +'tr:last-child td{border-bottom:none}'
+    +'.note{font-size:12px;color:#5B6B7A;margin-top:20px}'
+    +'</style></head><body>'
+    +'<header><div class="mark"></div><h1>AI Idea Pipeline — Management Report</h1>'
+    +'<p>ACS Innovation · Generated '+d+' · Read-only snapshot</p>'
+    +'<p style="margin-top:8px;color:#C7D0D8"><b style="color:#fff">Scope: '+esc(scopeTitle)+'</b> · '+ideas.length+' idea'+(ideas.length===1?'':'s')+'<br><span style="font-size:12px">'+scopeDetail+'</span></p></header><main>'
+    +'<div class="cards">'
+    +'<div class="card"><div class="k">Total ideas</div><div class="v">'+ideas.length+'</div></div>'
+    +'<div class="card"><div class="k">Active</div><div class="v">'+active.length+'</div></div>'
+    +'<div class="card"><div class="k">Pilots running</div><div class="v">'+pilots+'</div></div>'
+    +'<div class="card"><div class="k">Completed</div><div class="v">'+done+'</div></div>'
+    +'<div class="card"><div class="k">Projected €/yr</div><div class="v red">'+(proj?eur(proj):'—')+'</div></div>'
+    +'<div class="card"><div class="k">Realized €/yr</div><div class="v green">'+(real?eur(real):'—')+'</div></div>'
+    +'</div>'
+    +'<h2>Pipeline</h2><table><thead><tr><th>ID</th><th>Idea</th><th>Department</th><th>Stage</th><th>Score</th><th>Projected €/yr</th><th>Realized €/yr</th></tr></thead><tbody>'
+    +(rows||'<tr><td colspan="7">No ideas registered.</td></tr>')+'</tbody></table>'
+    +'<h2>Decision log</h2><table><thead><tr><th>Date</th><th>ID</th><th>Idea</th><th>Gate</th><th>Decision</th><th>Approver(s)</th><th>Note</th></tr></thead><tbody>'
+    +(decRows||'<tr><td colspan="7">No gate decisions recorded yet.</td></tr>')+'</tbody></table>'
+    +'<p class="note">Benefit figures are annualized. Realized = latest measured value per metric (6-month if available, otherwise 3-month). Projected/realized totals exclude any Parked or Rejected ideas even when those are included in the scope above. Attribution is indicative — parallel process changes may contribute to measured improvements. Source: AI Idea Pipeline console, maintained by the AI Ambassador.</p>'
+    +'</main></body></html>';
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  const slug=scopeTitle.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,40)||'report';
+  a.download='ai-pipeline-report-'+slug+'-'+d+'.html';
+  a.click();URL.revokeObjectURL(a.href);
+  toast('Report downloaded — ready to email');
+}
+
+function exportData(){
+  const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='acs-ai-pipeline-'+today()+'.json';
+  a.click();URL.revokeObjectURL(a.href);
+  toast('Backup downloaded');
+}
+function importData(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const s=JSON.parse(r.result);
+      if(!s||!Array.isArray(s.ideas))throw new Error('bad file');
+      if(!confirm('Replace current data with this backup ('+s.ideas.length+' ideas)?')){inp.value='';return;}
+      state=s;selStages=new Set();selDepts=new Set();selExclude=new Set();save();render();toast('Backup restored');
+    }catch(e){toast('Not a valid backup file');}
+    inp.value='';
+  };
+  r.readAsText(f);
+}
+
+/* ================= misc ================= */
+let toastT;
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),2600);
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){closeDrawer();closeModal('mNew');closeModal('mSub');}
+});
+
+render();
+</script>
+</body>
+</html>

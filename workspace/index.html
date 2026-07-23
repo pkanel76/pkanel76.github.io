@@ -9,6 +9,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/style.css">
+<style>
+  .locker.has-img{padding:0;overflow:hidden}
+  .locker.has-img .locker-pad{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
+  .locker-thumb{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
+  .locker.has-img:hover .locker-thumb{opacity:.92;transition:opacity .15s ease}
+</style>
 </head>
 <body class="depot">
 
@@ -124,8 +130,7 @@ async function renderWall(){
     const bottom = external
       ? `<span class="chip chip-ok">${p.chip || "Open \u2197"}</span>`
       : `<span class="chip chip-locked">Encrypted</span><span class="keyhole" aria-hidden="true"></span>`;
-    cells.push(`
-      <a class="locker" href="${href}"${attrs}>
+    const inner = `
         <div class="door-top">
           <span class="cell-code">${p.locker || ""}</span>
           <span class="vents" aria-hidden="true"></span>
@@ -134,8 +139,17 @@ async function renderWall(){
         <span class="meta">${p.source || ""} · ${p.date || ""}</span>
         <div class="door-bottom">
           ${bottom}
-        </div>
+        </div>`;
+    if (p.img){
+      cells.push(`
+      <a class="locker has-img" href="${href}"${attrs}>
+        <img class="locker-thumb" src="${p.img}" alt="${p.title} preview" loading="lazy">
+        <div class="locker-pad">${inner}</div>
       </a>`);
+    } else {
+      cells.push(`
+      <a class="locker" href="${href}"${attrs}>${inner}</a>`);
+    }
   });
   for (let i = projects.length; i < MIN_CELLS; i++){
     const code = String.fromCharCode(65 + Math.floor(i/4)) + "-" + String(i % 4 + 1).padStart(2,"0");

@@ -11,11 +11,21 @@
       "img": "img/acs-pang.jpg"
     },
     {
+      "slug": "inflows-dashboard",
+      "title": "Project inflows dashboard",
+      "source": "Dashboard",
+      "date": "2026-07",
+      "locker": "A-02",
+      "url": "acs_inflows_dashboard.html",
+      "chip": "Open ↗",
+      "img": "img/inflows.jpg"
+    },
+    {
       "slug": "athens-microhub-note",
       "title": "Athens micro-hub coverage: working note",
       "source": "Claude · sample",
       "date": "2026-06",
-      "locker": "A-02"
+      "locker": "A-03"
     }
   ]
 }

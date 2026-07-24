@@ -24,16 +24,16 @@
     .hero-photo{justify-self:start;max-width:300px}
   }
 
-  /* project logos */
-  .logo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
+  /* project logos — rounded pills */
+  .logo-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
   .logo-tile{
     display:inline-flex;align-items:center;justify-content:center;
-    min-width:92px;max-width:100%;padding:10px 14px;
-    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    min-width:56px;max-width:100%;padding:7px 16px;
+    background:var(--card);border:1px solid var(--line);border-radius:999px;
     text-decoration:none;color:inherit;
     transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
   }
-  .logo-tile img{height:28px;width:auto;max-width:100%;object-fit:contain;display:block}
+  .logo-tile img{height:24px;width:auto;max-width:100%;object-fit:contain;display:block}
   .logo-tile:hover,.logo-tile:focus-visible{transform:translateY(-2px);border-color:#CBD0C6;box-shadow:0 6px 16px rgba(22,29,38,.07)}
   .logo-tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
   /* greys at rest, colour on hover/focus — only where hover exists (desktop);

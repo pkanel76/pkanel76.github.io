@@ -25,24 +25,26 @@
   }
 
   /* project logos */
-  .logo-row{display:flex;flex-wrap:wrap;gap:12px;align-items:stretch}
+  .logo-row{display:flex;flex-wrap:wrap;gap:10px;align-items:stretch}
   .logo-tile{
     display:inline-flex;align-items:center;justify-content:center;
-    min-width:120px;max-width:100%;padding:16px 22px;
+    min-width:92px;max-width:100%;padding:10px 14px;
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    text-decoration:none;color:inherit;
     transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
   }
-  .logo-tile img{height:38px;width:auto;max-width:100%;object-fit:contain;display:block}
-  .logo-tile:hover{transform:translateY(-2px);border-color:#CBD0C6;box-shadow:0 6px 16px rgba(22,29,38,.07)}
-  /* greys at rest, colour on hover — only where hover exists (desktop);
+  .logo-tile img{height:28px;width:auto;max-width:100%;object-fit:contain;display:block}
+  .logo-tile:hover,.logo-tile:focus-visible{transform:translateY(-2px);border-color:#CBD0C6;box-shadow:0 6px 16px rgba(22,29,38,.07)}
+  .logo-tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  /* greys at rest, colour on hover/focus — only where hover exists (desktop);
      touch devices fall through to full colour */
   @media (hover:hover){
     .logo-tile img{filter:grayscale(1) opacity(.5);transition:filter .25s ease,opacity .25s ease}
-    .logo-tile:hover img{filter:grayscale(0) opacity(1)}
+    .logo-tile:hover img,.logo-tile:focus-visible img{filter:grayscale(0) opacity(1)}
   }
   @media (prefers-reduced-motion:reduce){
     .logo-tile,.logo-tile img{transition:none}
-    .logo-tile:hover{transform:none}
+    .logo-tile:hover,.logo-tile:focus-visible{transform:none}
   }
 </style>
 </head>
@@ -128,18 +130,18 @@
       <div>
         <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Horizon Europe</p>
         <div class="logo-row">
-          <div class="logo-tile"><img src="assets/logos/panacea.png" alt="PANACEA"></div>
-          <div class="logo-tile"><img src="assets/logos/urbane.png" alt="URBANE"></div>
-          <div class="logo-tile"><img src="assets/logos/disco.png" alt="DISCO"></div>
-          <div class="logo-tile"><img src="assets/logos/trace.png" alt="TRACE"></div>
-          <div class="logo-tile"><img src="assets/logos/green-log.png" alt="GREEN-LOG"></div>
+          <a class="logo-tile" href="https://panacea-project.eu/" target="_blank" rel="noopener noreferrer" title="PANACEA"><img src="assets/logos/panacea.png" alt="PANACEA"></a>
+          <a class="logo-tile" href="https://urbane-horizoneurope.eu/" target="_blank" rel="noopener noreferrer" title="URBANE"><img src="assets/logos/urbane.png" alt="URBANE"></a>
+          <a class="logo-tile" href="https://discoprojecteu.com/" target="_blank" rel="noopener noreferrer" title="DISCO"><img src="assets/logos/disco.png" alt="DISCO"></a>
+          <a class="logo-tile" href="https://trace-horizon.eu/" target="_blank" rel="noopener noreferrer" title="TRACE"><img src="assets/logos/trace.png" alt="TRACE"></a>
+          <a class="logo-tile" href="https://greenlog-project.eu/" target="_blank" rel="noopener noreferrer" title="GREEN-LOG"><img src="assets/logos/green-log.png" alt="GREEN-LOG"></a>
         </div>
       </div>
       <div>
         <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Greek &amp; EU co-funded</p>
         <div class="logo-row">
-          <div class="logo-tile"><img src="assets/logos/transfarency.png" alt="TRANSFARENCY"></div>
-          <div class="logo-tile"><img src="assets/logos/ml-cluster.png" alt="INCOMPOSE · M&amp;L Cluster"></div>
+          <a class="logo-tile" href="https://transfarency-project.gr/en/home/" target="_blank" rel="noopener noreferrer" title="TRANSFARENCY"><img src="assets/logos/transfarency.png" alt="TRANSFARENCY"></a>
+          <a class="logo-tile" href="https://mlcluster.imet.gr/home/in-compose-for-ml-cluster/" target="_blank" rel="noopener noreferrer" title="INCOMPOSE · M&amp;L Cluster"><img src="assets/logos/ml-cluster.png" alt="INCOMPOSE · M&amp;L Cluster"></a>
         </div>
       </div>
       <p class="muted" style="max-width:62ch;font-size:.95rem">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>

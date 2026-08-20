@@ -1,19 +1,21 @@
 /* ============================================================
    P. Kanellopoulos — personal site
    Design tokens
-   Palette: paper #FAFAF7 · ink #161D26 · signal red #D7301F
+   Palette (OCEAN): paper #F9F7F0 · ink #072A40 · signal teal #178CA4
+   Private workspace (depot) keeps the original signal red #D7301F.
    Type:    Archivo (display) · IBM Plex Sans (body) · IBM Plex Mono (codes)
    ============================================================ */
 
 :root{
-  --paper:#FAFAF7;
+  --paper:#F9F7F0;
   --card:#FFFFFF;
-  --panel:#F0F1EC;
-  --ink:#161D26;
-  --muted:#5B6570;
-  --line:#DCDFD8;
-  --accent:#D7301F;
-  --accent-deep:#A8200F;
+  --panel:#EDE8DC;
+  --ink:#072A40;
+  --muted:#51616C;
+  --line:#DED7C7;
+  --accent:#178CA4;
+  --accent-deep:#0F6B80;
+  --glow:rgba(23,140,164,.16);
   --ok:#1E7A4E;
 
   --font-display:'Archivo',system-ui,sans-serif;
@@ -198,6 +200,10 @@ body.depot{
   --ink:#E9EBE6;
   --muted:#93A0AC;
   --line:#2A323C;
+  /* the private workspace keeps the original signal red */
+  --accent:#D7301F;
+  --accent-deep:#A8200F;
+  --glow:rgba(215,48,31,.16);
   background:var(--paper);color:var(--ink);
 }
 body.depot .site-header{background:var(--paper)}
@@ -314,7 +320,7 @@ body.depot .btn:hover{background:var(--ink);color:#11161C}
   }
   main.route .section.lit::before{
     border-color:var(--accent);background:var(--accent);
-    box-shadow:0 0 0 4px rgba(215,48,31,.16);
+    box-shadow:0 0 0 4px var(--glow);
   }
 }
 @media (max-width:979px){

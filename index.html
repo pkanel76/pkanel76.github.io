@@ -9,7 +9,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
-<script src="assets/route.js" defer></script>
+<script>
+  /* Section tabs: mark that JavaScript runs and pick the starting tab from the URL
+     (#focus, #projects, #background, #credentials) before the first paint, so the
+     page never flashes all four sections. Without JavaScript the sections stack as before. */
+  (function (d) {
+    var t = location.hash.slice(1), ok = { focus: 1, projects: 1, background: 1, credentials: 1 };
+    d.classList.add('js');
+    d.setAttribute('data-tab', ok[t] ? t : 'focus');
+  })(document.documentElement);
+</script>
 <style>
   /* hero with portrait */
   .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center}
@@ -24,21 +33,6 @@
     .hero-photo{justify-self:start;max-width:300px}
   }
 
-  /* project logos — rounded pills */
-  .logo-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-  .logo-tile{
-    display:inline-flex;align-items:center;justify-content:center;
-    min-width:56px;max-width:100%;padding:7px 16px;
-    background:var(--card);border:1px solid var(--line);border-radius:999px;
-    text-decoration:none;color:inherit;
-    transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
-  }
-  .logo-tile img{height:24px;width:auto;max-width:100%;object-fit:contain;display:block}
-  .logo-tile:hover,.logo-tile:focus-visible{transform:translateY(-2px);border-color:#CBD0C6;box-shadow:0 6px 16px rgba(22,29,38,.07)}
-  .logo-tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  /* text-only tile: placeholder until a project logo / website exists */
-  .logo-tile--text{height:40px;font-family:var(--font-display);font-weight:700;font-size:.9rem;letter-spacing:.08em;color:var(--muted);opacity:.7;cursor:default}
-  .logo-tile--text:hover{transform:none;box-shadow:none;border-color:var(--line)}
   /* short courses: lighter than degrees and long-form certificates */
   .cred-sub{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin:36px 0 4px}
   .cred-list--short .what{font-weight:500}
@@ -49,15 +43,101 @@
   /* component courses under a professional certificate */
   .cred-parts{flex-basis:100%;display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:-6px;font-size:.88rem;color:var(--muted)}
   .cred-parts a{color:var(--muted)}
-  /* greys at rest, colour on hover/focus — only where hover exists (desktop);
-     touch devices fall through to full colour */
-  @media (hover:hover){
-    .logo-tile img{filter:grayscale(1) opacity(.5);transition:filter .25s ease,opacity .25s ease}
-    .logo-tile:hover img,.logo-tile:focus-visible img{filter:grayscale(0) opacity(1)}
+
+  /* ---------- card tints ----------
+     Two matched pairs (fill + border) drawn from the Ocean palette.
+     Neighbouring cards alternate, so no two side-by-side cards share a tint. */
+  :root{
+    --tint-teal:#EAF1EF; --tint-teal-line:#BFD6D8;
+    --tint-sand:#F3EFE6; --tint-sand-line:#DED7C7;
   }
-  @media (prefers-reduced-motion:reduce){
-    .logo-tile,.logo-tile img{transition:none}
-    .logo-tile:hover,.logo-tile:focus-visible{transform:none}
+  /* focus cards: 3 columns on desktop, so simple alternation reads as a checkerboard */
+  #focus .card{background:var(--tint-sand);border-color:var(--tint-sand-line)}
+  #focus .card:nth-child(odd){background:var(--tint-teal);border-color:var(--tint-teal-line)}
+
+  /* ---------- project cards ---------- */
+  .proj-groups{display:flex;flex-direction:column;gap:36px}
+  .proj-group-label{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+  .proj-grid{display:grid;grid-template-columns:1fr;gap:16px}
+  .proj{
+    display:flex;flex-direction:column;padding:24px;border-radius:var(--radius);
+    background:var(--tint-sand);border:1px solid var(--tint-sand-line);
+  }
+  .proj:nth-child(odd){background:var(--tint-teal);border-color:var(--tint-teal-line)}
+  .proj-head{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;min-height:34px}
+  .proj-logo{display:block;width:auto;height:auto;max-height:34px;max-width:128px}
+  .proj-tag{font-family:var(--font-mono);font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+  .proj h3{font-size:1.15rem;margin-top:18px}
+  .proj p{color:var(--muted);font-size:.95rem;margin-top:6px}
+  .proj-links{margin-top:auto;padding-top:16px;display:flex;flex-wrap:wrap;gap:8px 20px}
+  .proj-links a,.proj-links .soon{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.02em}
+  .proj-links a{color:var(--accent-deep);text-decoration:none;border-bottom:1px solid currentColor}
+  .proj-links a:hover,.proj-links a:focus-visible{color:var(--ink)}
+  .proj-links .soon{color:var(--muted)}
+  .proj-role{max-width:62ch;font-size:.95rem}
+  @media (min-width:700px){
+    .proj-grid{grid-template-columns:1fr 1fr}
+    /* an odd last card spans the full row */
+    .proj:last-child:nth-child(odd){grid-column:1 / -1}
+    /* two columns: checkerboard (cards 1, 4, 5, 8 … teal) */
+    .proj:nth-child(odd){background:var(--tint-sand);border-color:var(--tint-sand-line)}
+    .proj:nth-child(4n+1),.proj:nth-child(4n){background:var(--tint-teal);border-color:var(--tint-teal-line)}
+  }
+
+  /* ---------- section tabs ----------
+     A horizontal route with four stops. The teal marker travels to the chosen stop.
+     The bar only appears when JavaScript runs (html.js); otherwise the sections stack. */
+  .tabs{display:none}
+  .js .tabs{
+    display:block;position:sticky;top:0;z-index:5;
+    background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  }
+  .tablist{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .tab-track{position:absolute;left:0;right:0;top:19px;height:2px;background:var(--line)}
+  .tab{
+    position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;gap:8px;
+    padding:14px 0 12px;background:none;border:0;font:inherit;color:var(--muted);
+    text-align:left;cursor:pointer;
+  }
+  .tab-node{
+    width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--line);
+    transition:border-color .2s ease;
+  }
+  .tab-label{font-family:var(--font-display);font-weight:700;font-size:1.02rem;line-height:1.2;letter-spacing:-.01em;white-space:nowrap}
+  .tab:hover{color:var(--ink)}
+  .tab:hover .tab-node{border-color:var(--accent)}
+  .tab[aria-selected="true"]{color:var(--ink)}
+  .tab[aria-selected="true"] .tab-node{border-color:var(--accent)}
+  .tab:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+  .tab-marker{
+    position:absolute;left:0;top:14px;z-index:2;width:12px;height:12px;border-radius:50%;
+    background:var(--accent);box-shadow:0 0 0 4px var(--glow);opacity:0;pointer-events:none;
+  }
+  .tablist.is-ready .tab-marker{opacity:1;transition:transform .38s cubic-bezier(.4,0,.2,1)}
+  @media (max-width:600px){
+    .tablist{grid-template-columns:repeat(4,auto);justify-content:space-between;gap:8px}
+    .tab-label{font-size:.9rem}
+  }
+  @media (max-width:360px){
+    .tab-label{font-size:.8rem;letter-spacing:0}
+  }
+
+  /* panels: one visible at a time, chosen by html[data-tab] */
+  .js .tabbed{min-height:min(70vh,620px)}
+  .js .tabbed > .section{display:none;border-top:0;padding-block:44px 8px;scroll-margin-top:72px}
+  .js .tabbed .section-head .eyebrow{display:none}  /* the tab already names the section */
+  .js .tabbed > .section:focus{outline:none}  /* panels take focus on #links; the tab shows where you are */
+  html.js[data-tab="focus"] #focus,
+  html.js[data-tab="projects"] #projects,
+  html.js[data-tab="background"] #background,
+  html.js[data-tab="credentials"] #credentials{display:block;animation:panel-in .22s ease both}
+  @keyframes panel-in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* printing gives the whole profile, not just the open tab */
+  @media print{
+    .js .tabs{display:none}
+    .js .tabbed > .section{display:block!important;animation:none}
+    .js .tabbed .section-head .eyebrow{display:flex}
   }
 </style>
 </head>
@@ -67,7 +147,7 @@
   <div class="wrap">
     <a class="brand" href="index.html">P. Kanellopoulos</a>
     <nav class="site-nav" aria-label="Site">
-      <a href="index.html" aria-current="page">Profile</a>
+      <a href="index.html" aria-current="page">About</a>
       <a href="publications.html">Publications</a>
       <a href="dissemination.html">Dissemination</a>
       <a href="workspace/index.html">Workspace</a>
@@ -76,8 +156,7 @@
   </div>
 </header>
 
-<main class="wrap route">
-  <span class="route-progress" aria-hidden="true"></span>
+<main class="wrap">
 
   <!-- ============ HERO ============ -->
   <section class="hero">
@@ -97,6 +176,21 @@
       </figure>
     </div>
   </section>
+
+  <!-- ============ SECTION TABS ============
+       Shown only when JavaScript runs. Each tab's aria-controls is the id of its section below. -->
+  <div class="tabs">
+    <div class="tablist" role="tablist" aria-label="Page sections">
+      <span class="tab-track" aria-hidden="true"></span>
+      <span class="tab-marker" aria-hidden="true"></span>
+      <button class="tab" type="button" role="tab" id="tab-focus" aria-controls="focus" aria-selected="true"><span class="tab-node" aria-hidden="true"></span><span class="tab-label">Focus</span></button>
+      <button class="tab" type="button" role="tab" id="tab-projects" aria-controls="projects" aria-selected="false" tabindex="-1"><span class="tab-node" aria-hidden="true"></span><span class="tab-label">Projects</span></button>
+      <button class="tab" type="button" role="tab" id="tab-background" aria-controls="background" aria-selected="false" tabindex="-1"><span class="tab-node" aria-hidden="true"></span><span class="tab-label">Background</span></button>
+      <button class="tab" type="button" role="tab" id="tab-credentials" aria-controls="credentials" aria-selected="false" tabindex="-1"><span class="tab-node" aria-hidden="true"></span><span class="tab-label">Credentials</span></button>
+    </div>
+  </div>
+
+  <div class="tabbed">
 
   <!-- ============ FOCUS ============ -->
   <section class="section" id="focus">
@@ -139,29 +233,71 @@
       <p class="eyebrow">Project portfolio</p>
       <h2>EU &amp; national projects</h2>
     </div>
-    <div style="display:flex;flex-direction:column;gap:20px">
-      <div>
-        <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Horizon Europe</p>
-        <div class="logo-row">
-          <a class="logo-tile" href="https://panacea-project.eu/" target="_blank" rel="noopener noreferrer" title="PANACEA"><img src="assets/logos/panacea.png" alt="PANACEA"></a>
-          <a class="logo-tile" href="https://urbane-horizoneurope.eu/" target="_blank" rel="noopener noreferrer" title="URBANE"><img src="assets/logos/urbane.png" alt="URBANE"></a>
-          <a class="logo-tile" href="https://discoprojecteu.com/" target="_blank" rel="noopener noreferrer" title="DISCO"><img src="assets/logos/disco.png" alt="DISCO"></a>
-          <a class="logo-tile" href="https://trace-horizon.eu/" target="_blank" rel="noopener noreferrer" title="TRACE"><img src="assets/logos/trace.png" alt="TRACE"></a>
-          <a class="logo-tile" href="https://greenlog-project.eu/" target="_blank" rel="noopener noreferrer" title="GREEN-LOG"><img src="assets/logos/green-log.png" alt="GREEN-LOG"></a>
+    <div class="proj-groups">
+      <div class="proj-group">
+        <p class="proj-group-label mono muted">Horizon Europe &amp; Horizon 2020</p>
+        <div class="proj-grid">
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/green-log.png" alt=""><span class="proj-tag">GREEN-LOG · Athens</span></div>
+          <h3>Shared infrastructure for a cleaner last mile</h3>
+          <p>The Athens Living Lab brings partners together around micro-consolidation, lockers and shared electric delivery. ACS leads the Living Lab and connects the pilot plan with daily operations.</p>
+          <div class="proj-links"><a href="https://greenlog-project.eu/driving-sustainability-transforming-last-mile-delivery-in-athens-through-green-log/" target="_blank" rel="noopener noreferrer">Project story <span aria-hidden="true">↗</span></a><a href="https://greenlog-project.eu/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/disco.png" alt=""><span class="proj-tag">DISCO · Thessaloniki</span></div>
+          <h3>Finding useful space in a dense city</h3>
+          <p>An ACS branch relocation and locker installation at TIF-Helexpo, explored with city and research partners.</p>
+          <div class="proj-links"><a href="https://www.senatorproject.eu/stories/transforming-urban-logistics-the-thessaloniki-living-labs-role-in-the-disco-project/" target="_blank" rel="noopener noreferrer">Project coverage <span aria-hidden="true">↗</span></a><a href="https://discoprojecteu.com/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/trace.png" alt=""><span class="proj-tag">TRACE · Greece</span></div>
+          <h3>More than one way to move a parcel</h3>
+          <p>TRACE is about multimodality in logistics operations. Three Greek pilots tested long-haul transport of roll cages by train instead of truck, the use of other available vehicles to stay resilient during unexpected events, and an autonomous-vehicle delivery on the NTUA campus, ACS&#8217;s first.</p>
+          <div class="proj-links"><a href="https://trace-horizon.eu/trace-at-cityminds-summer-school-sharing-innovation-in-sustainable-urban-logistics/" target="_blank" rel="noopener noreferrer">TRACE coverage <span aria-hidden="true">↗</span></a><a href="https://trace-horizon.eu/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/urbane.png" alt=""><span class="proj-tag">URBANE · Thessaloniki</span></div>
+          <h3>Planning a locker network with data</h3>
+          <p>In the Thessaloniki Living Lab, delivery data and a city digital twin supported the design and roll-out of an optimised ACS parcel locker network, a base for future multi-operator collaboration.</p>
+          <div class="proj-links"><a href="https://urban-mobility-observatory.transport.ec.europa.eu/scaling-digital-enabled-urban-logistics-thessaloniki-living-lab-experience_en" target="_blank" rel="noopener noreferrer">Living Lab story <span aria-hidden="true">↗</span></a><a href="https://urbane-horizoneurope.eu/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/panacea.png" alt=""><span class="proj-tag">PANACEA · Greece</span></div>
+          <h3>Fitness-to-drive tools for professional drivers</h3>
+          <p>Health-based tools that assess commercial drivers&#8217; fitness to drive, tested in pilots in Greece, Spain and Sweden with professional drivers and courier riders.</p>
+          <div class="proj-links"><a href="https://cordis.europa.eu/project/id/953426" target="_blank" rel="noopener noreferrer">EU project record <span aria-hidden="true">↗</span></a><a href="https://panacea-project.eu/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
         </div>
       </div>
-      <div>
-        <p class="mono muted" style="font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px">Greek &amp; EU co-funded</p>
-        <div class="logo-row">
-          <a class="logo-tile" href="https://transfarency-project.gr/en/home/" target="_blank" rel="noopener noreferrer" title="TRANSFARENCY"><img src="assets/logos/transfarency.png" alt="TRANSFARENCY"></a>
-          <a class="logo-tile" href="https://mlcluster.imet.gr/home/in-compose-for-ml-cluster/" target="_blank" rel="noopener noreferrer" title="INCOMPOSE · M&amp;L Cluster"><img src="assets/logos/ml-cluster.png" alt="INCOMPOSE · M&amp;L Cluster"></a>
-          <!-- ADELLE (GSRI-funded). Placeholder: no project website or logo yet.
-               When ready, replace this <span> with:
-               <a class="logo-tile" href="PROJECT_URL" target="_blank" rel="noopener noreferrer" title="ADELLE"><img src="assets/logos/adelle.png" alt="ADELLE"></a> -->
-          <span class="logo-tile logo-tile--text" title="ADELLE · project website coming soon">ADELLE</span>
+      <div class="proj-group">
+        <p class="proj-group-label mono muted">Greek &amp; EU co-funded</p>
+        <div class="proj-grid">
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/transfarency.png" alt=""><span class="proj-tag">TRANSFARENCY · Greece</span></div>
+          <h3>A traceable parcel journey on blockchain</h3>
+          <p>Blockchain functions for parcel track-and-trace, recipient changes and temperature monitoring of sensitive packages.</p>
+          <div class="proj-links"><a href="https://transfarency-project.gr/2023/07/21/dsclm/" target="_blank" rel="noopener noreferrer">Project coverage (in Greek) <span aria-hidden="true">↗</span></a><a href="https://transfarency-project.gr/en/home/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/ml-cluster.png" alt=""><span class="proj-tag">INCOMPOSE · M&amp;L Cluster</span></div>
+          <h3>Ten products from one logistics cluster</h3>
+          <p>As a member of the Smart Mobility &amp; Logistics innovation cluster, ACS took part in co-developing ten products for current challenges in moving people and goods.</p>
+          <div class="proj-links"><a href="https://acscourier.net/en/useful-info/useful-information/acs-news/initiative-for-collaborative-development-exploitation-of-innovative-products-and-services-for-mobility-logistics" target="_blank" rel="noopener noreferrer">ACS announcement <span aria-hidden="true">↗</span></a><a href="https://mlcluster.imet.gr/home/in-compose-for-ml-cluster/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
+        </article>
+        <article class="proj">
+          <!-- ADELLE (GSRI-funded): no logo or website yet. When ready:
+               1) upload the logo as assets/logos/adelle.png and put
+                  <img class="proj-logo" src="assets/logos/adelle.png" alt=""> before the proj-tag span;
+               2) replace the "Website coming soon" span with
+                  <a href="PROJECT_URL" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a> -->
+          <div class="proj-head"><span class="proj-tag">ADELLE · Greece</span></div>
+          <h3>New national R&amp;D project</h3>
+          <p>Funded by the Greek General Secretariat for Research and Innovation (GSRI). Started in October 2026; details and project website to follow.</p>
+          <div class="proj-links"><span class="soon">Website coming soon</span></div>
+        </article>
         </div>
       </div>
-      <p class="muted" style="max-width:62ch;font-size:.95rem">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>
+      <p class="muted proj-role">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>
     </div>
   </section>
 
@@ -252,6 +388,8 @@
     </ul>
   </section>
 
+  </div><!-- /.tabbed -->
+
 </main>
 
 <footer class="site-footer">
@@ -260,6 +398,76 @@
     <span>Built as a working tool, not a brochure.</span>
   </div>
 </footer>
+
+<script>
+/* Section tabs: click, arrow keys (Left/Right/Home/End) and #hash links.
+   Visibility itself is CSS (html[data-tab]); this script keeps the ARIA state,
+   the marker position and the URL hash in step. */
+(function () {
+  var root = document.documentElement;
+  var bar = document.querySelector('.tabs');
+  var list = bar && bar.querySelector('[role="tablist"]');
+  var wrapper = document.querySelector('.tabbed');
+  if (!list || !wrapper) return;
+  var tabs = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]'));
+  var ids = tabs.map(function (t) { return t.getAttribute('aria-controls'); });
+  var marker = list.querySelector('.tab-marker');
+
+  tabs.forEach(function (t) {
+    var panel = document.getElementById(t.getAttribute('aria-controls'));
+    if (!panel) return;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', t.id);
+    panel.setAttribute('tabindex', '0');
+  });
+
+  function place() {
+    var node = list.querySelector('[aria-selected="true"] .tab-node');
+    if (!node || !marker) return;
+    var x = node.getBoundingClientRect().left - list.getBoundingClientRect().left;
+    marker.style.transform = 'translateX(' + x + 'px)';
+  }
+
+  function select(id, byUser) {
+    if (ids.indexOf(id) < 0) id = ids[0];
+    root.setAttribute('data-tab', id);
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('aria-controls') === id;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+    });
+    place();
+    if (!byUser) return;
+    try { history.replaceState(null, '', location.href.split('#')[0] + '#' + id); } catch (e) {}
+    /* If the bar is pinned to the top, bring the start of the new section into view. */
+    var rest = wrapper.getBoundingClientRect().top + window.pageYOffset - bar.offsetHeight;
+    if (window.pageYOffset > rest + 1) window.scrollTo(0, rest);
+  }
+
+  tabs.forEach(function (t) {
+    t.addEventListener('click', function () { select(t.getAttribute('aria-controls'), true); });
+  });
+  list.addEventListener('keydown', function (e) {
+    var i = tabs.indexOf(document.activeElement), n = null;
+    if (i < 0) return;
+    if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+    else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+    else if (e.key === 'Home') n = 0;
+    else if (e.key === 'End') n = tabs.length - 1;
+    if (n === null) return;
+    e.preventDefault();
+    tabs[n].focus();
+    select(ids[n], true);
+  });
+  window.addEventListener('hashchange', function () { select(location.hash.slice(1)); });
+  window.addEventListener('resize', place);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(place);
+
+  select(root.getAttribute('data-tab'));
+  /* Let the marker glide only after its first placement, so it doesn't slide in on load. */
+  requestAnimationFrame(function () { requestAnimationFrame(function () { list.classList.add('is-ready'); }); });
+})();
+</script>
 
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panagiotis Kanellopoulos — Head of Innovation, ACS Courier &amp; Postal Services</title>
-<meta name="description" content="Panagiotis Kanellopoulos. Head of Innovation and AI Ambassador at ACS Courier & Postal Services. Last-mile delivery, out-of-home networks, urban logistics, EU-funded R&D and applied AI — Athens, Greece.">
+<title>Panagiotis Kanellopoulos — Innovation Management, ACS Courier &amp; Postal Services</title>
+<meta name="description" content="Panagiotis Kanellopoulos. Innovation Management and AI Ambassador at ACS Courier & Postal Services. Last-mile delivery, out-of-home networks, urban logistics, EU-funded R&D and applied AI — Athens, Greece.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -36,6 +36,12 @@
   .logo-tile img{height:24px;width:auto;max-width:100%;object-fit:contain;display:block}
   .logo-tile:hover,.logo-tile:focus-visible{transform:translateY(-2px);border-color:#CBD0C6;box-shadow:0 6px 16px rgba(22,29,38,.07)}
   .logo-tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  /* text-only tile: placeholder until a project logo / website exists */
+  .logo-tile--text{height:40px;font-family:var(--font-display);font-weight:700;font-size:.9rem;letter-spacing:.08em;color:var(--muted);opacity:.7;cursor:default}
+  .logo-tile--text:hover{transform:none;box-shadow:none;border-color:var(--line)}
+  /* short courses: lighter than degrees and long-form certificates */
+  .cred-sub{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;margin:36px 0 4px}
+  .cred-list--short .what{font-weight:500}
   /* greys at rest, colour on hover/focus — only where hover exists (desktop);
      touch devices fall through to full colour */
   @media (hover:hover){
@@ -72,7 +78,7 @@
       <div>
         <p class="eyebrow">Athens, GR · Innovation · Last-mile logistics</p>
         <h1>Panagiotis Kanellopoulos</h1>
-        <p class="role">Head of Innovation and AI Ambassador at ACS Courier &amp; Postal Services, and the company's representative to iQnovus, the Quest Group innovation centre. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
+        <p class="role">Innovation Management and AI Ambassador at ACS Courier &amp; Postal Services. I connect new logistics models — out-of-home delivery, locker networks, urban logistics pilots — with real operations.</p>
         <p class="sub">My route here went through more than a decade in medical-sector sales and product management, then ACS corporate sales. So I look at every pilot from two sides at once: does it work operationally, and does it create value for the customer and the business. Outside the day job: agentic AI, Python, blockchain, Web3 and IoT.</p>
         <div class="hero-actions">
           <a class="btn btn-accent" href="contact.html">Get in touch</a>
@@ -93,6 +99,21 @@
     </div>
     <div class="grid grid-2">
       <article class="card">
+        <span class="code">EU R&amp;D</span>
+        <h3>EU-funded research &amp; innovation</h3>
+        <p>Horizon Europe and national projects: shaping proposals, coordinating pilots and partners, and delivering on time and in budget — with claims a courier operator can credibly stand behind.</p>
+      </article>
+      <article class="card">
+        <span class="code">AI</span>
+        <h3>Applied AI &amp; agentic tools</h3>
+        <p>As ACS's AI Ambassador, driving the adoption of AI across the organisation — internal tools, agentic workflows, and hands-on prototypes that bring AI into everyday logistics and innovation work.</p>
+      </article>
+      <article class="card">
+        <span class="code">ADOPT</span>
+        <h3>From pilot to operations</h3>
+        <p>The hard part of innovation: moving ideas out of the demo phase and into daily operations, working with startups, universities, research centres, technology providers and public authorities.</p>
+      </article>
+      <article class="card">
         <span class="code">OOH</span>
         <h3>Out-of-home delivery &amp; locker networks</h3>
         <p>Strategy and operations for locker-based delivery: network design, customer adoption, and routing parcels to where people actually want them.</p>
@@ -101,21 +122,6 @@
         <span class="code">URBAN</span>
         <h3>Urban logistics pilots</h3>
         <p>Piloting new delivery models in dense city environments — micro-hubs, consolidated flows, low-emission last mile — with Athens as the main testbed.</p>
-      </article>
-      <article class="card">
-        <span class="code">EU R&amp;D</span>
-        <h3>EU-funded research &amp; innovation</h3>
-        <p>Horizon Europe and national projects: shaping proposals, coordinating pilots and partners, and delivering on time and in budget — with claims a courier operator can credibly stand behind.</p>
-      </article>
-      <article class="card">
-        <span class="code">ADOPT</span>
-        <h3>From pilot to operations</h3>
-        <p>The hard part of innovation: moving ideas out of the demo phase and into daily operations, working with startups, universities, research centres, technology providers and public authorities.</p>
-      </article>
-      <article class="card">
-        <span class="code">AI</span>
-        <h3>Applied AI &amp; agentic tools</h3>
-        <p>As ACS's AI Ambassador, driving the adoption of AI across the organisation — internal tools, agentic workflows, and hands-on prototypes that bring AI into everyday logistics and innovation work.</p>
       </article>
     </div>
   </section>
@@ -142,6 +148,10 @@
         <div class="logo-row">
           <a class="logo-tile" href="https://transfarency-project.gr/en/home/" target="_blank" rel="noopener noreferrer" title="TRANSFARENCY"><img src="assets/logos/transfarency.png" alt="TRANSFARENCY"></a>
           <a class="logo-tile" href="https://mlcluster.imet.gr/home/in-compose-for-ml-cluster/" target="_blank" rel="noopener noreferrer" title="INCOMPOSE · M&amp;L Cluster"><img src="assets/logos/ml-cluster.png" alt="INCOMPOSE · M&amp;L Cluster"></a>
+          <!-- ADELLE (GSRI-funded). Placeholder: no project website or logo yet.
+               When ready, replace this <span> with:
+               <a class="logo-tile" href="PROJECT_URL" target="_blank" rel="noopener noreferrer" title="ADELLE"><img src="assets/logos/adelle.png" alt="ADELLE"></a> -->
+          <span class="logo-tile logo-tile--text" title="ADELLE · project website coming soon">ADELLE</span>
         </div>
       </div>
       <p class="muted" style="max-width:62ch;font-size:.95rem">Role across projects: ideation and pilot design, proposal coordination, consortium and partner management, internal F&amp;A and operational coordination, and dissemination.</p>
@@ -162,7 +172,7 @@
       </li>
       <li>
         <span class="when">2023 – present · ACS</span>
-        <h3>Innovation Management — Head of Innovation</h3>
+        <h3>Innovation Management</h3>
         <p>Funding opportunity exploration, pilot design, proposal coordination and management of granted projects — partners, consortium meetings, deliverables, on time and in budget. Plus ecosystem building with startups, academia, research centres and public authorities.</p>
       </li>
       <li>
@@ -203,6 +213,17 @@
       <li><span class="what">CS50: Introduction to AI with Python</span><span class="who">HarvardX</span></li>
       <li><span class="what">Blockchain (MOOC)</span><span class="who">University of Nicosia · 2024</span></li>
       <li><span class="what">Languages</span><span class="who">Greek (native) · English (full professional) · Spanish (elementary)</span></li>
+    </ul>
+
+    <p class="mono muted cred-sub">Short courses · Anthropic Academy</p>
+    <ul class="cred-list cred-list--short">
+      <li><span class="what">Claude Code in Action</span><span class="who">Anthropic · Oct 2026</span></li>
+      <li><span class="what">AI Fluency for Educators</span><span class="who">Anthropic · Oct 2026</span></li>
+      <li><span class="what">AI Fluency: Framework &amp; Foundations</span><span class="who">Anthropic · Oct 2026</span></li>
+      <li><span class="what">AI Capabilities and Limitations</span><span class="who">Anthropic · Oct 2026</span></li>
+      <li><span class="what">Claude Code 101</span><span class="who">Anthropic · Sep 2026</span></li>
+      <li><span class="what">Introduction to Claude Cowork</span><span class="who">Anthropic · Sep 2026</span></li>
+      <li><span class="what">Claude 101</span><span class="who">Anthropic · Aug 2026</span></li>
     </ul>
   </section>
 

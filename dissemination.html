@@ -31,6 +31,12 @@
   .hubcard-go{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--muted);margin-top:6px;display:flex;align-items:center;gap:8px;transition:color .18s ease}
   .hubcard-go::after{content:"\2193"}
+  /* pinned highlight at the top of Talks & panels */
+  .card--featured{margin-bottom:20px;padding:30px 30px 28px;border-left:4px solid var(--accent);gap:12px}
+  .card--featured h3{font-size:1.45rem;line-height:1.25}
+  .card--featured .feat-event{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+  .card--featured p{max-width:70ch}
+  @media(max-width:600px){.card--featured{padding:22px 20px}.card--featured h3{font-size:1.2rem}}
 </style>
 </head>
 <body>
@@ -91,11 +97,29 @@
 
 
   <!-- ============ 1. TALKS & PANELS ============ -->
+  <!-- WMX Europe 2026 is pinned as the featured card; add new entries at the top of the grid below. -->
   <section class="section dissem" id="talks">
     <div class="section-head">
       <p class="eyebrow">Section 01</p>
       <h2>Talks &amp; panels</h2>
     </div>
+    <article class="card card--featured" aria-label="Featured talk">
+      <div class="top">
+        <span class="code">Featured · Panel</span>
+        <time datetime="2026-06">22–24 Jun 2026 · Athens</time>
+      </div>
+      <h3>Lockers, PUDO and beyond: the full OOH picture</h3>
+      <p class="feat-event">WMX Europe 2026 · international mail &amp; express industry conference · Grand Hyatt Athens</p>
+      <p>Panellist on locker networks, PUDO points and the full out-of-home delivery picture, representing ACS on a speaker roster spanning European postal CEOs (CTT, Omniva, Pos Malaysia) and OOH players (Bloq.it, BOX NOW, Parcel Locker Central).</p>
+      <div class="go-row">
+        <a class="go" href="https://www.wmxeurope.com/speakers/" target="_blank" rel="noopener">Speakers →</a>
+        <a class="go" href="https://www.flickr.com/photos/132876195@N06/55363017342/in/album-72177720334442106/" target="_blank" rel="noopener">Photo 1 →</a>
+        <a class="go" href="https://www.flickr.com/photos/132876195@N06/55363959106/in/album-72177720334442106/" target="_blank" rel="noopener">Photo 2 →</a>
+        <a class="go" href="https://lnkd.in/p/dgfYcin4" target="_blank" rel="noopener">LinkedIn post 1 →</a>
+        <a class="go" href="https://lnkd.in/p/dwZtDiGQ" target="_blank" rel="noopener">LinkedIn post 2 →</a>
+      </div>
+    </article>
+
     <div class="grid grid-2">
 
       <article class="card">
@@ -136,19 +160,6 @@
         <a class="go" href="https://www.cityminds.eu/#speakers" target="_blank" rel="noopener">Speakers →</a>
       </article>
 
-      <article class="card">
-        <div class="top">
-          <span class="code">PANEL</span>
-          <time datetime="2026-06">22–24 Jun 2026</time>
-        </div>
-        <h3>Lockers, PUDO and beyond: the full OOH picture</h3>
-        <p>Panel at WMX Europe 2026 (Grand Hyatt Athens), the international mail &amp; express industry conference, on locker networks, PUDO points and the full out-of-home delivery picture, on a speaker roster spanning European postal CEOs (CTT, Omniva, Pos Malaysia) and OOH players (Bloq.it, BOX NOW, Parcel Locker Central).</p>
-        <div class="go-row">
-          <a class="go" href="https://www.wmxeurope.com/speakers/" target="_blank" rel="noopener">Speakers →</a>
-          <a class="go" href="https://www.flickr.com/photos/132876195@N06/55363017342/in/album-72177720334442106/" target="_blank" rel="noopener">Photo 1 →</a>
-          <a class="go" href="https://www.flickr.com/photos/132876195@N06/55363959106/in/album-72177720334442106/" target="_blank" rel="noopener">Photo 2 →</a>
-        </div>
-      </article>
 
       <article class="card">
         <div class="top">

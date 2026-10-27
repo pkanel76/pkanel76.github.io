@@ -77,8 +77,6 @@
   .proj-role{max-width:62ch;font-size:.95rem}
   @media (min-width:700px){
     .proj-grid{grid-template-columns:1fr 1fr}
-    /* an odd last card spans the full row */
-    .proj:last-child:nth-child(odd){grid-column:1 / -1}
     /* two columns: checkerboard (cards 1, 4, 5, 8 … teal) */
     .proj:nth-child(odd){background:var(--tint-sand);border-color:var(--tint-sand-line)}
     .proj:nth-child(4n+1),.proj:nth-child(4n){background:var(--tint-teal);border-color:var(--tint-teal-line)}

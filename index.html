@@ -66,6 +66,7 @@
   .proj:nth-child(odd){background:var(--tint-teal);border-color:var(--tint-teal-line)}
   .proj-head{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px;min-height:34px}
   .proj-logo{display:block;width:auto;height:auto;max-height:34px;max-width:128px}
+  .proj-logo.proj-photo{max-height:64px;max-width:120px}  /* a photo (e.g. the drone) needs more room than a logo */
   .proj-tag{font-family:var(--font-mono);font-size:.74rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
   .proj h3{font-size:1.15rem;margin-top:18px}
   .proj p{color:var(--muted);font-size:.95rem;margin-top:6px}
@@ -289,9 +290,20 @@
                2) replace the "Website coming soon" span with
                   <a href="PROJECT_URL" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a> -->
           <div class="proj-head"><span class="proj-tag">ADELLE · Greece</span></div>
-          <h3>New national R&amp;D project</h3>
-          <p>Funded by the Greek General Secretariat for Research and Innovation (GSRI). Started in October 2026; details and project website to follow.</p>
+          <h3>A parcel locker network that moves</h3>
+          <p>Developing a flexible network of mobile parcel lockers and a custom robotic arm to deploy them from vans to the roadside, supported by smart routing and digital twin technology. Funded by the Greek General Secretariat for Research and Innovation (GSRI); started October 2026.</p>
           <div class="proj-links"><span class="soon">Website coming soon</span></div>
+        </article>
+        </div>
+      </div>
+      <div class="proj-group">
+        <p class="proj-group-label mono muted">In-house &amp; Quest Group</p>
+        <div class="proj-grid">
+        <article class="proj">
+          <div class="proj-head"><img class="proj-logo proj-photo" src="assets/logos/drone-kos-pserimos.png" alt="The red VTOL drone used for the Kos–Pserimos flight"><span class="proj-tag">Drone delivery pilot · Kos–Pserimos</span></div>
+          <h3>Medical supplies to a remote island, by drone</h3>
+          <p>Quest Group companies ACS and Uni Systems, with Pleiades IoT Innovation Cluster and PROBOTEK, flew medical supplies 12 km from Kos to Pserimos in 8 minutes in September 2023: Greece&#8217;s first beyond-visual-line-of-sight (BVLOS) flight for medical supplies licensed by the Hellenic Civil Aviation Authority.</p>
+          <div class="proj-links"><a href="https://acscourier.net/en/useful-info/useful-information/acs-news/pilot-flight-of-sending-medical-equipment-by-drone" target="_blank" rel="noopener noreferrer">Press release <span aria-hidden="true">↗</span></a><a href="https://dronelife.com/2023/09/21/bvlos-medical-drone-delivery-could-be-lifesaving-in-greek-islands/" target="_blank" rel="noopener noreferrer">DroneLife coverage <span aria-hidden="true">↗</span></a></div>
         </article>
         </div>
       </div>

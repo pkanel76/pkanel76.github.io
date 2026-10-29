@@ -39,6 +39,33 @@
   .card--featured .feat-event{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
   .card--featured p{max-width:70ch}
   @media(max-width:600px){.card--featured{padding:22px 20px}.card--featured h3{font-size:1.2rem}}
+
+  /* ---------- card tints (same matched pairs as the About page) ----------
+     Section cards alternate teal and sand so no two neighbouring cards share a colour.
+     The three photo cards at the top (.hubcard) are not affected. */
+  :root{
+    --tint-teal:#EAF1EF; --tint-teal-line:#BFD6D8;
+    --tint-sand:#F3EFE6; --tint-sand-line:#DED7C7;
+  }
+  /* featured cards: the first is teal, its partner sand; the teal left edge stays */
+  .dissem .card--featured{background:var(--tint-teal);border-color:var(--tint-teal-line);border-left-color:var(--accent)}
+  .dissem .featured-pair .card--featured:nth-child(even){background:var(--tint-sand);border-color:var(--tint-sand-line);border-left-color:var(--accent)}
+  /* grids: A = first colour, B = second. A grid sitting right under featured cards starts sand,
+     so the same colour never stacks across the two blocks. */
+  .dissem .grid{--A:var(--tint-teal);--A-line:var(--tint-teal-line);--B:var(--tint-sand);--B-line:var(--tint-sand-line)}
+  .dissem .featured-pair + .grid,
+  .dissem .card--featured + .grid{--A:var(--tint-sand);--A-line:var(--tint-sand-line);--B:var(--tint-teal);--B-line:var(--tint-teal-line)}
+  /* 1 or 3 columns: plain alternation already gives a checkerboard */
+  .dissem .grid > .card{background:var(--B);border-color:var(--B-line)}
+  .dissem .grid > .card:nth-child(odd){background:var(--A);border-color:var(--A-line)}
+  /* 2 columns: alternate by row as well (cards 1, 4, 5, 8 ... take the first colour).
+     The grid has 2 columns when it is 596–901 px wide (two or three 290 px tracks + 16 px gaps). */
+  .dissem{container-type:inline-size}
+  @container (min-width:596px) and (max-width:901.98px){
+    .dissem .grid > .card:nth-child(odd){background:var(--B);border-color:var(--B-line)}
+    .dissem .grid > .card:nth-child(4n+1),
+    .dissem .grid > .card:nth-child(4n){background:var(--A);border-color:var(--A-line)}
+  }
 </style>
 </head>
 <body>
@@ -79,7 +106,7 @@
       <a class="hubcard" href="#articles">
         <div class="hubcard-img"><img src="dissem/articles.jpg" alt="Last-mile logistics article illustration"></div>
         <div class="hubcard-body">
-          <span class="code">3 entries</span>
+          <span class="code">2 entries</span>
           <h3>Articles</h3>
           <p>Written pieces and contributions on innovation in delivery and logistics.</p>
           <span class="hubcard-go">View articles</span>
@@ -257,18 +284,6 @@
           <a class="go" href="https://www.dsclm.imet.gr/2023/" target="_blank" rel="noopener">Event page →</a>
         </div>
       </article>
-      <!-- TEMPLATE: talk/panel card. For a confirmed future event, add an
-           "Upcoming" chip: <span class="chip chip-locked">Upcoming</span>
-           after the date, and remove it once delivered. -->
-      <article class="card">
-        <div class="top">
-          <span class="code">TALK</span>
-          <time datetime="2026">[Month 2026]</time>
-        </div>
-        <h3>[Talk or panel title]</h3>
-        <p>[Event name, city. One line on the topic.]</p>
-        <a class="go" href="#">View source →</a>
-      </article>
 
     </div>
   </section>
@@ -301,17 +316,6 @@
         <a class="go" href="https://marketplace.eiturbanmobility.eu/insights/exploring-the-future-of-microhubs-in-last-mile-logistics" target="_blank" rel="noopener">Read →</a>
       </article>
 
-      <!-- TEMPLATE: article card. Use ARTICLE for bylined pieces,
-           CO-AUTHOR for contributions to others' pieces or project blogs. -->
-      <article class="card">
-        <div class="top">
-          <span class="code">ARTICLE</span>
-          <time datetime="2026">[Month 2026]</time>
-        </div>
-        <h3>[Article title]</h3>
-        <p>[Where it was published and one line on what it argues.]</p>
-        <a class="go" href="#">Read →</a>
-      </article>
 
     </div>
   </section>
@@ -394,17 +398,6 @@
         <a class="go" href="https://greenlog-project.eu/key-takeaways-from-green-log-workshop-in-athens-unveiled/" target="_blank" rel="noopener">Read →</a>
       </article>
 
-      <!-- TEMPLATE: mention card. Use MEDIA for press/interviews,
-           MENTION for posts by others referencing you or your work. -->
-      <article class="card">
-        <div class="top">
-          <span class="code">MENTION</span>
-          <time datetime="2026">[Month 2026]</time>
-        </div>
-        <h3>[Who mentioned you, where]</h3>
-        <p>[Context in one line, e.g. coverage of a panel, a project post naming ACS's pilot.]</p>
-        <a class="go" href="#">View source →</a>
-      </article>
 
     </div>
   </section>

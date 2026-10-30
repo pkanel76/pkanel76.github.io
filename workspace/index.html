@@ -16,6 +16,9 @@
   .locker.has-img:hover .locker-thumb{opacity:.92;transition:opacity .15s ease}
   .locker .built{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
   .locker .built b{color:var(--ink);font-weight:500}
+  .locker.is-off{cursor:default}
+  .locker.is-off:hover{transform:none;border-color:var(--line)}
+  .locker.is-off:hover .locker-thumb{opacity:1}
   .gate[hidden]{display:none} /* .gate{display:flex} in style.css overrides the hidden attribute */
 </style>
 </head>
@@ -127,10 +130,13 @@ async function renderWall(){
   }
   const cells = [];
   projects.forEach((p) => {
-    const external = !!p.url;
+    const off = !!p.disabled;          // "disabled": true → shown, but not clickable
+    const external = !off && !!p.url;
     const href  = external ? p.url : `view.html?p=${encodeURIComponent(p.slug)}`;
     const attrs = external ? ` target="_blank" rel="noopener"` : "";
-    const bottom = external
+    const bottom = off
+      ? `<span class="chip">${p.chip || "Preview only"}</span>`
+      : external
       ? `<span class="chip chip-ok">${p.chip || "Open \u2197"}</span>`
       : `<span class="chip chip-locked">Encrypted</span><span class="keyhole" aria-hidden="true"></span>`;
     const inner = `
@@ -144,15 +150,18 @@ async function renderWall(){
           ${bottom}
         </div>${p.tool ? `
         <span class="built">Built with <b>${p.tool}</b></span>` : ""}`;
+    const tag  = off ? "div" : "a";
+    const open = off ? ` aria-disabled="true"` : ` href="${href}"${attrs}`;
+    const cls  = "locker" + (p.img ? " has-img" : "") + (off ? " is-off" : "");
     if (p.img){
       cells.push(`
-      <a class="locker has-img" href="${href}"${attrs}>
+      <${tag} class="${cls}"${open}>
         <img class="locker-thumb" src="${p.img}" alt="${p.title} preview" loading="lazy">
         <div class="locker-pad">${inner}</div>
-      </a>`);
+      </${tag}>`);
     } else {
       cells.push(`
-      <a class="locker" href="${href}"${attrs}>${inner}</a>`);
+      <${tag} class="${cls}"${open}>${inner}</${tag}>`);
     }
   });
   for (let i = projects.length; i < MIN_CELLS; i++){

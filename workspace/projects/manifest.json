@@ -5,6 +5,7 @@
       "title": "ACS Pang",
       "source": "Browser game",
       "date": "2026-07",
+      "tool": "Claude",
       "locker": "A-01",
       "url": "acs_pang.html",
       "chip": "Play ↗",
@@ -15,6 +16,7 @@
       "title": "Project inflows dashboard",
       "source": "Dashboard",
       "date": "2026-07",
+      "tool": "ChatGPT",
       "locker": "A-02",
       "url": "acs_inflows_dashboard.html",
       "chip": "Open ↗",
@@ -25,17 +27,44 @@
       "title": "AI idea pipeline console",
       "source": "Innovation tool",
       "date": "2026-07",
+      "tool": "ChatGPT",
       "locker": "A-03",
       "url": "ai-pipeline-console.html",
       "chip": "Open ↗",
       "img": "img/pipeline.jpg"
     },
     {
-      "slug": "athens-microhub-note",
-      "title": "Athens micro-hub coverage: working note",
-      "source": "Claude · sample",
-      "date": "2026-06",
-      "locker": "A-04"
+      "slug": "portfolio-tracker",
+      "title": "Portfolio tracker",
+      "source": "Finance tool",
+      "date": "2026-10",
+      "tool": "Replit",
+      "locker": "A-04",
+      "url": "https://cef2bdf7-81af-4614-b927-cc83093d8089-00-24sw8e87j9hf4.picard.replit.dev/holdings",
+      "chip": "Open ↗",
+      "img": "img/portfolio.jpg"
+    },
+    {
+      "slug": "household-expenses",
+      "title": "Household expense tracker",
+      "source": "Finance tool",
+      "date": "2026-10",
+      "tool": "Replit",
+      "locker": "B-01",
+      "url": "https://79ccf503-c5f0-4a79-95e3-d21f110e464a-00-35db727ms1g5m.spock.replit.dev/",
+      "chip": "Open ↗",
+      "img": "img/household.jpg"
+    },
+    {
+      "slug": "investment-cost-calculator",
+      "title": "Investment plan cost calculator",
+      "source": "Funding tool",
+      "date": "2026-10",
+      "tool": "Replit",
+      "locker": "B-02",
+      "url": "https://f85b946e-ea9c-475e-b8ba-47f4a7ec6e0d-00-iucn7pel3bmw.picard.replit.dev/",
+      "chip": "Open ↗",
+      "img": "img/cost-calculator.jpg"
     }
   ]
 }

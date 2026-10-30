@@ -14,6 +14,9 @@
   .locker.has-img .locker-pad{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1;min-height:0}
   .locker-thumb{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
   .locker.has-img:hover .locker-thumb{opacity:.92;transition:opacity .15s ease}
+  .locker .built{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+  .locker .built b{color:var(--ink);font-weight:500}
+  .gate[hidden]{display:none} /* .gate{display:flex} in style.css overrides the hidden attribute */
 </style>
 </head>
 <body class="depot">
@@ -51,7 +54,7 @@
     <div class="section-head">
       <p class="eyebrow">Private workspace</p>
       <h2>The locker wall</h2>
-      <p class="muted" style="max-width:62ch">Working prototypes from projects built with Claude, Replit and others. Encrypted lockers need their own key to open; live lockers open a running app or page directly. Share an encrypted project by sending its link plus its key.</p>
+      <p class="muted" style="max-width:62ch">Working prototypes built with Claude, ChatGPT, Replit and others. Any data shown is invented. Encrypted lockers need their own key to open; live lockers open a running app or page directly. Share an encrypted project by sending its link plus its key.</p>
     </div>
     <div class="locker-wall" id="locker-wall" aria-live="polite"></div>
   </section>
@@ -139,7 +142,8 @@ async function renderWall(){
         <span class="meta">${p.source || ""} · ${p.date || ""}</span>
         <div class="door-bottom">
           ${bottom}
-        </div>`;
+        </div>${p.tool ? `
+        <span class="built">Built with <b>${p.tool}</b></span>` : ""}`;
     if (p.img){
       cells.push(`
       <a class="locker has-img" href="${href}"${attrs}>

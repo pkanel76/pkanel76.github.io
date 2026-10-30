@@ -76,6 +76,29 @@
   .proj-links a:hover,.proj-links a:focus-visible{color:var(--ink)}
   .proj-links .soon{color:var(--muted)}
   .proj-role{max-width:62ch;font-size:.95rem}
+  /* video strip at the top of Projects: plain white card so it reads as "about all projects", not as one of them */
+  .proj-video{
+    display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center;padding:16px;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    color:inherit;text-decoration:none;transition:border-color .2s ease;
+  }
+  .proj-video:hover,.proj-video:focus-visible{border-color:var(--accent)}
+  .proj-video:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .proj-video-thumb{position:relative;aspect-ratio:16/9;border-radius:6px;overflow:hidden;background:var(--panel)}
+  .proj-video-thumb img{display:block;width:100%;height:100%;object-fit:cover}
+  .proj-video-play{
+    position:absolute;inset:0;margin:auto;width:44px;height:44px;border-radius:50%;
+    background:color-mix(in srgb,var(--ink) 80%,transparent);
+  }
+  .proj-video-play::after{
+    content:"";position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);
+    border-style:solid;border-width:8px 0 8px 13px;border-color:transparent transparent transparent var(--paper);
+  }
+  .proj-video h3{font-size:1.1rem;margin-top:8px}
+  .proj-video p{color:var(--muted);font-size:.93rem;margin-top:4px}
+  .proj-video-cta{display:inline-block;margin-top:10px;font-family:var(--font-mono);font-size:.76rem;color:var(--accent-deep);border-bottom:1px solid currentColor}
+  .proj-video:hover .proj-video-cta{color:var(--ink)}
+  @media (max-width:560px){.proj-video{grid-template-columns:1fr;gap:14px}}
   @media (min-width:700px){
     .proj-grid{grid-template-columns:1fr 1fr}
     /* two columns: checkerboard (cards 1, 4, 5, 8 … teal) */
@@ -233,6 +256,15 @@
       <h2>EU &amp; national projects</h2>
     </div>
     <div class="proj-groups">
+      <a class="proj-video" href="https://www.youtube.com/watch?v=wip9NK_bcLo" target="_blank" rel="noopener noreferrer">
+        <span class="proj-video-thumb"><img src="https://i.ytimg.com/vi/wip9NK_bcLo/hqdefault.jpg" alt="" loading="lazy" onerror="this.remove()"><span class="proj-video-play" aria-hidden="true"></span></span>
+        <div>
+          <span class="proj-tag">Video · Innovation highlights</span>
+          <h3>ACS innovation pilots on video</h3>
+          <p>Scenes from TRACE&#8217;s autonomous vehicle, GREEN-LOG in Athens, DISCO and URBANE in Thessaloniki, and the Kos–Pserimos drone flight.</p>
+          <span class="proj-video-cta">Watch on YouTube <span aria-hidden="true">↗</span></span>
+        </div>
+      </a>
       <div class="proj-group">
         <p class="proj-group-label mono muted">Horizon Europe &amp; Horizon 2020</p>
         <div class="proj-grid">
@@ -272,6 +304,14 @@
         <p class="proj-group-label mono muted">Greek &amp; EU co-funded</p>
         <div class="proj-grid">
         <article class="proj">
+          <!-- ADELLE: no website yet. When it exists, replace the "Website coming soon" span with
+               <a href="PROJECT_URL" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a> -->
+          <div class="proj-head"><img class="proj-logo" src="assets/logos/adelle.png" alt=""><span class="proj-tag">ADELLE · Greece</span></div>
+          <h3>A parcel locker network that moves</h3>
+          <p>Developing a flexible network of mobile parcel lockers and a custom robotic arm to deploy them from vans to the roadside, supported by smart routing and digital twin technology. Funded by the Greek General Secretariat for Research and Innovation (GSRI); started October 2026.</p>
+          <div class="proj-links"><span class="soon">Website coming soon</span></div>
+        </article>
+        <article class="proj">
           <div class="proj-head"><img class="proj-logo" src="assets/logos/transfarency.png?v=3" alt=""><span class="proj-tag">TRANSFARENCY · Greece</span></div>
           <h3>A traceable parcel journey on blockchain</h3>
           <p>Blockchain functions for parcel track-and-trace, recipient changes and temperature monitoring of sensitive packages.</p>
@@ -283,17 +323,6 @@
           <p>As a member of the Smart Mobility &amp; Logistics innovation cluster, ACS took part in co-developing ten products for current challenges in moving people and goods.</p>
           <div class="proj-links"><a href="https://acscourier.net/en/useful-info/useful-information/acs-news/initiative-for-collaborative-development-exploitation-of-innovative-products-and-services-for-mobility-logistics" target="_blank" rel="noopener noreferrer">ACS announcement <span aria-hidden="true">↗</span></a><a href="https://mlcluster.imet.gr/home/in-compose-for-ml-cluster/" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a></div>
         </article>
-        <article class="proj">
-          <!-- ADELLE (GSRI-funded): no logo or website yet. When ready:
-               1) upload the logo as assets/logos/adelle.png and put
-                  <img class="proj-logo" src="assets/logos/adelle.png" alt=""> before the proj-tag span;
-               2) replace the "Website coming soon" span with
-                  <a href="PROJECT_URL" target="_blank" rel="noopener noreferrer">Website <span aria-hidden="true">↗</span></a> -->
-          <div class="proj-head"><span class="proj-tag">ADELLE · Greece</span></div>
-          <h3>A parcel locker network that moves</h3>
-          <p>Developing a flexible network of mobile parcel lockers and a custom robotic arm to deploy them from vans to the roadside, supported by smart routing and digital twin technology. Funded by the Greek General Secretariat for Research and Innovation (GSRI); started October 2026.</p>
-          <div class="proj-links"><span class="soon">Website coming soon</span></div>
-        </article>
         </div>
       </div>
       <div class="proj-group">
@@ -303,7 +332,7 @@
           <div class="proj-head"><img class="proj-logo proj-photo" src="assets/logos/drone-kos-pserimos.png" alt="The red VTOL drone used for the Kos–Pserimos flight"><span class="proj-tag">Drone delivery pilot · Kos–Pserimos</span></div>
           <h3>Medical supplies to a remote island, by drone</h3>
           <p>Quest Group companies ACS and Uni Systems, with Pleiades IoT Innovation Cluster and PROBOTEK, flew medical supplies 12 km from Kos to Pserimos in 8 minutes in September 2023: Greece&#8217;s first beyond-visual-line-of-sight (BVLOS) flight for medical supplies licensed by the Hellenic Civil Aviation Authority.</p>
-          <div class="proj-links"><a href="https://acscourier.net/en/useful-info/useful-information/acs-news/pilot-flight-of-sending-medical-equipment-by-drone" target="_blank" rel="noopener noreferrer">Press release <span aria-hidden="true">↗</span></a><a href="https://dronelife.com/2023/09/21/bvlos-medical-drone-delivery-could-be-lifesaving-in-greek-islands/" target="_blank" rel="noopener noreferrer">DroneLife coverage <span aria-hidden="true">↗</span></a></div>
+          <div class="proj-links"><a href="https://acscourier.net/en/useful-info/useful-information/acs-news/pilot-flight-of-sending-medical-equipment-by-drone" target="_blank" rel="noopener noreferrer">Press release <span aria-hidden="true">↗</span></a><a href="https://dronelife.com/2023/09/21/bvlos-medical-drone-delivery-could-be-lifesaving-in-greek-islands/" target="_blank" rel="noopener noreferrer">DroneLife coverage <span aria-hidden="true">↗</span></a><a href="https://www.youtube.com/watch?v=f1fCoX0bGj0" target="_blank" rel="noopener noreferrer">Pilot video <span aria-hidden="true">↗</span></a></div>
         </article>
         </div>
       </div>

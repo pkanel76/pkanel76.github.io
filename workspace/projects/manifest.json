@@ -40,9 +40,9 @@
       "date": "2026-10",
       "tool": "Replit",
       "locker": "A-04",
-      "url": "https://cef2bdf7-81af-4614-b927-cc83093d8089-00-24sw8e87j9hf4.picard.replit.dev/holdings",
-      "chip": "Open ↗",
-      "img": "img/portfolio.jpg"
+      "chip": "Preview only",
+      "img": "img/portfolio.jpg",
+      "disabled": true
     },
     {
       "slug": "household-expenses",
